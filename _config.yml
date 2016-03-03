@@ -18,3 +18,10 @@ encoding: UTF-8
 
 # Build settings
 markdown: kramdown
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      author: '<a href="http://baidu.com">Lu Tao</a>'
