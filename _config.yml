@@ -24,4 +24,4 @@ defaults:
     scope:
       path: ""
     values:
-      author: '<a href="http://baidu.com">Lu Tao</a>'
+      author: '<a href="https://github.com/lutaoact">Lu Tao</a>'
