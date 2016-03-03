@@ -2,7 +2,7 @@
 layout: post
 title:  "nodejs调用友盟push API: 签名错误问题"
 date:   2016-02-27 01:16:27 +0800
-categories: nodejs utf8 encode
+categories: nodejs utf8 encode umeng
 ---
 推送内容中若包含中文，则会报签名错误问题，错误码`"2027 签名不正确"`。
 
