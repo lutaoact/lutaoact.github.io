@@ -1,0 +1,82 @@
+---
+layout: post
+title:  "nginx笔记"
+date:   2016-03-07 14:21:41 +0800
+categories: nginx
+---
+* `nginx`命令
+{% highlight sh %}
+which nginx #查看nginx执行路径，一般位于/usr/sbin/nginx #需要sudo来执行
+sudo nginx -s reload #动态载入配置文件，不需要重启服务器，配置文件一般位于/etc/nginx/
+sudo service nginx restart/stop/start
+{% endhighlight %}
+
+* 正则表达式匹配操作符
+{% highlight sh %}
+~  #区分大小写 !~表示不匹配
+~* #不区分大小写 !~*表示不匹配
+{% endhighlight %}
+
+* 端口转发的配置
+{% highlight sh %}
+server
+{
+    listen 80 default_server; #host无法匹配到任何server_name的请求，默认在这里处理
+    server_name lutaoact.com;
+    location / {
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://127.0.0.1:9000; #转发到9000端口
+    }
+    access_log /data/log/lutaoact.com.access.log;
+}
+{% endhighlight %}
+
+* 处理CORS的配置
+{% highlight sh %}
+server
+{
+    listen 80;
+    server_name lutaoact.com;
+    location / {
+        set $cors '';
+        if ($http_origin ~* '(localhost|192\.168\.1\.155)') {
+          set $cors 'true';
+        }
+
+        if ($cors = 'true') {
+          add_header 'Access-Control-Allow-Origin' "$http_origin";
+          add_header 'Access-Control-Allow-Credentials' 'true';
+          add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS';
+          add_header 'Access-Control-Allow-Headers' 'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With';
+          #add_header 'Access-Control-Allow-Headers' '*';
+        }
+
+        if ($request_method = 'OPTIONS') {
+          add_header 'Access-Control-Allow-Origin' "$http_origin";
+          add_header 'Access-Control-Allow-Credentials' 'true';
+          add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS';
+          add_header 'Access-Control-Allow-Headers' 'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With';
+          #add_header 'Access-Control-Allow-Headers' '*';
+          return 204;
+        }
+    }
+    access_log /data/log/lutaoact.com.access.log;
+}
+{% endhighlight %}
+
+
+* 注意事项
+  * 启动`nginx`时，若默认绑定到`80`端口，则需要`sudo`权限
+
+* 安装
+  * `centos`:
+    *  建立`/etc/yum.repos.d/nginx.repo`文件，内容参考[yum repo][nginx-linux-packages]
+    *  签名下载地址：[nginx_signing.key][nginx_signing.key]，可使用`wget`或`curl`下载
+    *  导入数字签名：`sudo rpm --import nginx_signing.key`
+    *  `sudo yum update && sudo yum install -y nginx`
+
+[nginx_signing.key]: http://nginx.org/keys/nginx_signing.key
+[nginx-linux-packages]: http://nginx.org/en/linux_packages.html#mainline
