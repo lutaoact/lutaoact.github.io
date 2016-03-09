@@ -1,0 +1,35 @@
+---
+layout: post
+title:  "linux常用命令杂记"
+date:   2016-03-09 14:10:47 +0800
+categories: linux bash
+---
+
+## watch
+
+### 以指定的时间间隔自动地运行指定的命令，默认的时间间隔为 2 秒。
+{% highlight sh %}
+watch sar -P ALL 1 1 #查看所有cpu的使用情况
+watch ls -l #查看文件大小的变化
+{% endhighlight %}
+
+---
+---
+
+## sar
+
+### 服务器监控软件
+{% highlight sh %}
+sudo yum install -y sysstat #安装sar命令
+{% endhighlight %}
+
+---
+---
+
+## openssl
+
+### 生成文件或字符串的校验和
+{% highlight sh %}
+openssl sha1/md5 filename #生成指定文件的校验和
+echo -n 'xxx' | openssl md5 #生成字符串的校验和
+{% endhighlight %}
