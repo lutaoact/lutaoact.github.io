@@ -63,6 +63,10 @@ sar -V #查看version
     * `sar -P 1`
     * `sar -P 1 1 3`
     * `sar -P ALL -f /var/log/sa/sa10`
+3. Memory Free and Used (`sar -r`)
+4. Swap Space Used (`sar -S`)
+5. Overall I/O Activities (`sar -b`)
+6. Individual Block Device I/O Activities (`sar -d`)
 
 
 [参考链接](http://www.thegeekstuff.com/2011/03/sar-examples/)（这是一篇很好的文章）
