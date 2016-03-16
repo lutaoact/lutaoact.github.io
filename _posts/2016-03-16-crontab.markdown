@@ -5,12 +5,12 @@ date:   2016-03-16 09:57:48 +0800
 categories: linux crontab
 ---
 
-## Linux Crontab Format
+## 1. Linux Crontab Format
 {% highlight sh %}
 MIN HOUR DOM MON DOW CMD
 {% endhighlight %}
 
-### 各字段值允许的范围
+### 1. 各字段值允许的范围
 {% highlight sh %}
 MIN    0-59
 HOUR   0-23
@@ -19,4 +19,21 @@ MON    1-12
 DOW    0-6
 CMD    command
 #DOW: 0表示周日 6表示周六
+{% endhighlight %}
+
+### 2. `*`的含义
+{% highlight sh %}
+* * * * * CMD
+{% endhighlight %}
+The `*` means all the possible unit:
+
+* When you specify `*/5` in minute field means every 5 minutes.
+* When you specify `0-10/2` in minute field mean every 2 minutes in the first 10 minute.
+* Thus the above convention can be used for all the other 4 fields.
+
+## 2. 相关命令
+{% highlight sh %}
+crontab -l #查看当前用户的任务列表
+crontab -u username -l #查看指定用户的任务列表
+crontab -e
 {% endhighlight %}
