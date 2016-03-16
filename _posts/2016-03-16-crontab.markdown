@@ -31,6 +31,14 @@ The `*` means all the possible unit:
 * When you specify `0-10/2` in minute field mean every 2 minutes in the first 10 minute.
 * Thus the above convention can be used for all the other 4 fields.
 
+### 3. 特殊关键字的含义
+{% highlight sh %}
+@yearly     0 0 1 1 *
+@daily      0 0 * * *
+@hourly     0 * * * *
+@reboot     run at startup
+{% endhighlight %}
+
 ## 2. 相关命令
 {% highlight sh %}
 crontab -l #查看当前用户的任务列表
