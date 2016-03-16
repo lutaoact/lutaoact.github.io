@@ -1,0 +1,28 @@
+---
+layout: post
+title:  "crontab"
+date:   2016-03-16 09:57:48 +0800
+categories: linux crontab
+---
+
+## Linux Crontab Format
+{% highlight sh %}
+MIN HOUR DOM MON DOW CMD
+{% endhighlight %}
+
+### 各字段值允许的范围
+{% highlight sh %}
+|-------|-------------|
+|MIN    |0-59         |
+|-------|-------------|
+|HOUR   |0-23         |
+|-------|-------------|
+|DOM    |1-31         |
+|-------|-------------|
+|MON    |1-12         |
+|-------|-------------|
+|DOW    |0-6          |
+|-------|-------------|
+|CMD    |command      |
+|-------|-------------|
+{% endhighlight %}
