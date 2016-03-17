@@ -34,6 +34,7 @@ The `*` means all the possible unit:
 ### 3. 特殊关键字的含义
 {% highlight sh %}
 @yearly     0 0 1 1 *
+@monthly    0 0 1 * *
 @daily      0 0 * * *
 @hourly     0 * * * *
 @reboot     run at startup
