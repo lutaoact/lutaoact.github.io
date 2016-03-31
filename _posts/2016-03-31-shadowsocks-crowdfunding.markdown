@@ -34,7 +34,7 @@ categories: shadowsocks
 服务器是aws在日本的服务器，每个月大约20刀的费用（人民币100多块），很稳定，速度也不慢，虽然有人说貌似也有比较便宜的，但懒得换了，翻墙这事，我还是觉得稳定压倒一切，现在已经须臾离不开google了，国内某搜索真心没法用，啥都找不到，别说技术相关了，我媳妇是文科生，都嫌搜到的资料质量低。下面是一些用服务的朋友给的支持，我承诺会将每一笔捐赠都公开，并将所得全部用于维护服务器，希望能一直稳定高速地运行下去。
 
 * tfier: 99 2016-03-10
-* 十二: 20  2016-02-05
+* 十二: 50  2016-02-05
 
 [download-shadowsocks-windows]: http://7xsgzh.com1.z0.glb.clouddn.com/Shadowsocks.exe
 [download-shadowsocks-mac]: http://7xsgzh.com1.z0.glb.clouddn.com/ShadowsocksX-2.6.3.dmg
