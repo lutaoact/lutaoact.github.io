@@ -5,6 +5,16 @@ date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
 
+* rsync同步两个目录
+{% highlight sh %}
+rsync -rv --exclude=.git \
+          --exclude=.gitignore \
+          --exclude-from=node-server/.gitignore \
+          ~/node-server/ ~/Service/trunk/node-server/
+# --exclude      #排除的目录或文件
+# --exclude-from #从指定文件中读出排除的目录或文件
+{% endhighlight %}
+
 * 命令行中读入变量CMD的两种方法
 {% highlight sh %}
 read -r -d '' CMD <<'EOF'
