@@ -43,4 +43,4 @@ categories: shadowsocks
 [scan-qrcode-qn]: http://7xsgzh.com1.z0.glb.clouddn.com/img%2Fscan-qrcode.png
 [update-pac-qn]: http://7xsgzh.com1.z0.glb.clouddn.com/img%2Fupdate-pac.jpg
 [close-shadowsocks-qn]: http://7xsgzh.com1.z0.glb.clouddn.com/img/3.png
-[download-polipo-linux]: http://www.pps.univ-paris-diderot.fr/~jch/software/files/polipo/polipo-1.1.1.tar.gz
+[download-polipo-linux]: http://7xsgzh.com1.z0.glb.clouddn.com/polipo-1.1.1.tar.gz
