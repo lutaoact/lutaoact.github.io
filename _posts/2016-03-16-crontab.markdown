@@ -46,3 +46,32 @@ crontab -l #查看当前用户的任务列表
 crontab -u username -l #查看指定用户的任务列表
 crontab -e
 {% endhighlight %}
+
+## 3. 注意
+
+### 1. 环境变量
+`crontab`在运行时，会加载一个最简化的环境变量，如果希望保持用户的环境变量，可以通过`. ~/.bash_profile`文件，即：
+{% highlight sh %}
+* * * * * . ~/.bash_profile && node script.js
+{% endhighlight %}
+
+### 2. `%`转义
+`crontab`中`%`有特殊含义
+{% highlight sh %}
+* * * * * echo $(date +"\%F \%H:\%M:\%S") >> /data/log/crontab.log 2>&1
+
+# The "sixth" field (the rest of the line) specifies the command to be run. The
+# entire command portion of the line, up to a newline or % character, will be
+# executed by /bin/sh or by the shell specified in the SHELL variable of the
+# crontab file. Percent-signs (%) in the command, unless escaped with backslash
+# (\), will be changed into newline characters, and all data after the first %
+# will be sent to  the  command as standard input. There is no way to split a
+# single command line onto multiple lines, like the shell's trailing "\".
+{% endhighlight %}
+
+### 3. 标准输出/错误重定向
+`crontab`在执行的时候，如果没有重定向，会将标准错误和标准输出都发送到`mail`，在重定向的时候，句柄绑定操作应该放在命令最后。
+{% highlight sh %}
+* * * * * echo $(date +"\%F \%H:\%M:\%S") >> /data/log/crontab.log 2>&1
+# 2>&1 >> /data/log/crontab.log是错误的写法
+{% endhighlight %}
