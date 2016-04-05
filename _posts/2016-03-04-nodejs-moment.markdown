@@ -24,6 +24,32 @@ moment(1410715640579); //毫秒时间戳
 moment(1410715640, 'X'); //秒时间戳
 {% endhighlight %}
 
+* 时差`utcOffset`
+{% highlight js %}
+moment().utcOffset();//480 获取时差，以分钟为单位
+
+//设置时差，以下三种方式等价
+moment().utcOffset("+08:00");
+moment().utcOffset(8);  //以小时为单位
+moment().utcOffset(480);//以分钟为单位
+{% endhighlight %}
+
+* 本地化`locale`
+{% highlight js %}
+//设置周一为每周的第一天，默认周日为每周的第一天
+moment.locale('en', {week: {
+  dow: 1,// Monday is the first day of the week.
+}})
+
+moment.locale();//获取当前的locale
+{% endhighlight %}
+
+* 日期运算
+{% highlight js %}
+console.log(moment().subtract('1', 'w').startOf('week'));
+console.log(moment().add('1', 'w').endOf('week'));
+{% endhighlight %}
+
 查阅[moment docs][moment-docs]获取详细帮助。
 
 [moment-docs]: http://momentjs.com/docs/
