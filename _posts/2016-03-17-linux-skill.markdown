@@ -13,6 +13,7 @@ rsync -rv --exclude=.git \
           ~/node-server/ ~/Service/trunk/node-server/
 # --exclude      #排除的目录或文件
 # --exclude-from #从指定文件中读出排除的目录或文件
+# 源路径如果以/结尾，表示同步目录中的内容，如果没有/，则表示同步目录本身
 {% endhighlight %}
 
 * 命令行中读入变量CMD的两种方法
