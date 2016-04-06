@@ -1,9 +1,21 @@
 ---
 layout: post
-title:  "linux命令使用小技巧汇总"
+title:  "linux笔记整理"
 date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
+
+* openssl生成文件或字符串的校验和
+{% highlight sh %}
+openssl sha1/md5 filename #生成指定文件的校验和
+echo -n 'xxx' | openssl md5 #生成字符串的校验和
+{% endhighlight %}
+
+* watch命令以指定时间间隔自动地运行指定的命令，默认的时间间隔为2秒
+{% highlight sh %}
+watch sar -P ALL 1 1 #查看所有cpu的使用情况
+watch ls -l #查看文件大小的变化
+{% endhighlight %}
 
 * rsync同步两个目录
 {% highlight sh %}
