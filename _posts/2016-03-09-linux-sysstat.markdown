@@ -1,19 +1,8 @@
 ---
 layout: post
-title:  "linux常用命令杂记"
+title:  "sysstat相关"
 date:   2016-03-09 14:10:47 +0800
-categories: linux bash
----
-
-## watch
-
-### 以指定的时间间隔自动地运行指定的命令，默认的时间间隔为 2 秒。
-{% highlight sh %}
-watch sar -P ALL 1 1 #查看所有cpu的使用情况
-watch ls -l #查看文件大小的变化
-{% endhighlight %}
-
----
+categories: linux sar
 ---
 
 ## sysstat
@@ -70,14 +59,3 @@ sar -V #查看version
 
 
 [参考链接](http://www.thegeekstuff.com/2011/03/sar-examples/)（这是一篇很好的文章）
-
----
----
-
-## openssl
-
-### 生成文件或字符串的校验和
-{% highlight sh %}
-openssl sha1/md5 filename #生成指定文件的校验和
-echo -n 'xxx' | openssl md5 #生成字符串的校验和
-{% endhighlight %}
