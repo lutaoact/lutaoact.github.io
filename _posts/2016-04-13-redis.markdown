@@ -41,13 +41,25 @@ daemonize yes
 pidfile /data/tmp/redis_26379.pid
 port 26379
 bind 10.117.199.79 127.0.0.1
+
+# 空闲超时自动关闭
 timeout 3600
+
+# 日志文件
 logfile /data/log/redis26379.log
+
+# rdb持久化
 dbfilename redis_dump26379.rdb
 dir /data/redis
+
+# 启用aof持久化
 appendonly yes
 appendfilename "appendonly26379.aof"
 appendfsync everysec
+
+# 慢日志
+slowlog-log-slower-than 100000
+slowlog-max-len 65536
 {% endhighlight %}
 
 * 零碎知识点收集
