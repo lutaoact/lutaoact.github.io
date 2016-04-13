@@ -1,0 +1,81 @@
+---
+layout: post
+title:  "sed笔记整理"
+date:   2016-04-13 18:27:19 +0800
+categories: sed
+---
+
+## 介绍
+sed是一款优秀的文本处理程序，但是其不同版本在用法和参数上存在着较大差异，建议大家在使用时一定要查询相关文档，以免出错。
+
+以下示例大部分都是针对BSD版本的sed，因为OSX系统自带的sed就是这个版本，我是在mac上完成的相关测试。
+
+一般linux的发布版带的都是GNU版本的，个人感觉，GNU版本的更强大和方便。
+
+## 常用命令
+{% highlight sh %}
+sed '1!G;h;$!d' t.txt #反转一个文件的行
+sed "s/my/Hao Chen's/" pets.txt
+sed "3s/my/your/" pets.txt
+sed "3,6s/my/your/" pets.txt #只替换第3到第6行的文本
+sed -n '/cat/,/fish/p' my.txt
+sed '1!G;h;$!d' t.txt #反转一个文件的行
+sed 'N; s/\n  /, /' pets.txt #将两行合并，并用逗号分开
+sed -e 3,6{ -e /This/d -e } pets.txt
+sed '3,6{/This/d;}' pets.txt #BSD sed, must add semi-colon
+sed -f 3_6 pets.txt #use file
+sed '3,6 {/This/{/fish/d;};}' pets.txt
+sed '1,${/This/d;s/^ *//g;}' pets.txt
+sed -E '/dog/{N;N;N;s/(^|\n)/&# /g;}' pets.txt #BSD sed
+sed '/dog/,+3s/^/# /g' pets.txt #GNU sed
+sed = pets.txt | sed 'N;s/\n/'$'\t''/' > line_num_pets.txt
+sed = my.txt | sed 'N; s/^/    /; s/\(.\{5,\}\)\n/\1 /' #对文件中的所有行编号（行号在左，文字左端对齐）。
+#sed = my.txt | sed -E 'N; s/(.*)\n/    \1 /' #貌似，我也可以这么写
+sed '/'"$name"'/,/};/d' back_slash.txt
+#实际应用，用来做代码重构时：(err) -> next err  =>   next
+find . -name '*.coffee' | xargs sed -i '' -E '/\(err\) ->/{N;s/\(err\) ->\n +next err/next/g;}'
+#在多行的时候，[[:space:]]才会匹配换行符\n，只有单行的时候，字符串尾部的换行符已经被sed截掉，所以匹配不到
+#使用GNU sed去掉首行的BOM
+find . -name '*.srt' -exec gsed -i -e '1s/^\xEF\xBB\xBF//' {} \;
+gsed '1~2G' -i *.txt #奇数行后加空行
+sed -i -e '$a\' file #如果文件末尾没有换行符，则自动添加，解决"No newline at end of file"的问题，OSX sed中：sed -i '' -e '$a\'
+{% endhighlight %}
+
+## 神奇用法
+{% highlight sh %}
+# BSD sed中，插入一段文本的做法
+sed -iold '1i\'$'\n''text to prepend'$'\n' file.txt
+{% endhighlight %}
+{% highlight sh %}
+# $'\n'是bash中的换行符，具体执行原理如下：
+         sed -iold '1i\'$'\n''text to prepend'$'\n' file.txt
+                      ^^^^^^^^                     ^
+                     / |\|||/ \                    |__ No need to reopen
+                     | | \|/  |                          string to sed
+     Tells sed to    | |  |   |
+    escape the next _/ |  |   +-----------------------------+
+         char          |  +-------------+                   |
+                       |                |                   |
+                  Close string   The  special bash   Reopen string to
+                     to sed       newline char to      send to sed
+                                    send to sed
+{% endhighlight %}
+
+下面为应用以上原理的示例。这些示例都是针对BSD sed的。当替换文本中有单引号时，可以使用双引号圈引，减少转义。这是用于测试的my.txt[下载](/assets/my.txt)
+{% highlight sh %}
+# 在第1行插入内容
+sed "1i\\"$'\n'"my monkey's name is wukong"$'\n' my.txt
+
+# 在最后一行追加内容
+sed "$ a \\"$'\n'"my monkey's name is wukong"$'\n' my.txt
+
+# 在匹配行之前插入内容
+sed "/fish/i\\"$'\n'"my monkey's name is wukong"$'\n' my.txt
+
+# 在指定行修改为特定内容
+sed "2c \\"$'\n'"my monkey's name is wukong"$'\n' my.txt
+{% endhighlight %}
+{% highlight sh %}
+# 将my.txt中，每行的s，从第2个开始，全部替换为xxx
+sed 's/s/\'$'\n''xxx/2;h;s/s/xxx/g;H;g;s/\n.*\n//' my.txt
+{% endhighlight %}
