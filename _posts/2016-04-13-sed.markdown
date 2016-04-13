@@ -13,17 +13,25 @@ sed是一款优秀的文本处理程序，但是其不同版本在用法和参�
 一般linux的发布版带的都是GNU版本的，个人感觉，GNU版本的更强大和方便。
 
 ## 常用命令
+
+如果希望直接在源文件中修改，传参数`-i[.bak]`，在GNU sed中，`.bak`可选，但是在BSD sed中，必须添加，可以传递空字符串来表示直接修改源文件，即使用`-i ''`
+
+用于测试的pets.txt[下载](/assets/pets.txt)
 {% highlight sh %}
-sed '1!G;h;$!d' t.txt #反转一个文件的行
+sed '1!G;h;$!d' pets.txt #反转一个文件的行
+sed 'N; s/\n  /, /' pets.txt #将两行合并，并用逗号分开
+sed -e 's/'$(echo -e "\x15")'//g' file # sed用于去除ascii不可打印的控制字符
+
+# 常规的替换功能
 sed "s/my/Hao Chen's/" pets.txt
 sed "3s/my/your/" pets.txt
 sed "3,6s/my/your/" pets.txt #只替换第3到第6行的文本
-sed -n '/cat/,/fish/p' my.txt
-sed '1!G;h;$!d' t.txt #反转一个文件的行
-sed 'N; s/\n  /, /' pets.txt #将两行合并，并用逗号分开
+
+sed -n '/cat/,/fish/p' pets.txt # 只打印匹配cat和fish之前的行，-n表示不输出那些未匹配的行
+
 sed -e 3,6{ -e /This/d -e } pets.txt
 sed '3,6{/This/d;}' pets.txt #BSD sed, must add semi-colon
-sed -f 3_6 pets.txt #use file
+
 sed '3,6 {/This/{/fish/d;};}' pets.txt
 sed '1,${/This/d;s/^ *//g;}' pets.txt
 sed -E '/dog/{N;N;N;s/(^|\n)/&# /g;}' pets.txt #BSD sed
@@ -35,10 +43,17 @@ sed '/'"$name"'/,/};/d' back_slash.txt
 #实际应用，用来做代码重构时：(err) -> next err  =>   next
 find . -name '*.coffee' | xargs sed -i '' -E '/\(err\) ->/{N;s/\(err\) ->\n +next err/next/g;}'
 #在多行的时候，[[:space:]]才会匹配换行符\n，只有单行的时候，字符串尾部的换行符已经被sed截掉，所以匹配不到
+
 #使用GNU sed去掉首行的BOM
 find . -name '*.srt' -exec gsed -i -e '1s/^\xEF\xBB\xBF//' {} \;
+
 gsed '1~2G' -i *.txt #奇数行后加空行
-sed -i -e '$a\' file #如果文件末尾没有换行符，则自动添加，解决"No newline at end of file"的问题，OSX sed中：sed -i '' -e '$a\'
+gsed -i -e '$a\' file #如果文件末尾没有换行符，则自动添加，解决"No newline at end of file"的问题，OSX sed中：sed -i '' -e '$a\'
+{% endhighlight %}
+
+除了在命令行中使用字符串输入，也可以使用处理脚本作为输入，脚本3_6[下载](/assets/3_6)
+{% highlight sh %}
+sed -f 3_6 pets.txt #use file
 {% endhighlight %}
 
 ## 神奇用法
