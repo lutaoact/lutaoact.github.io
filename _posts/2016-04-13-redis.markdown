@@ -1,0 +1,36 @@
+---
+layout: post
+title:  "redis"
+date:   2016-04-13 15:02:37 +0800
+categories: linux redis
+---
+
+* linux bash命令杂记
+{% highlight sh %}
+telnet host port #可以用来连接redis，退出是使用命令quit，返回结果是redis数据传输协议的原始数据，没有解析和格式化，所以不是很好理解
+redis-cli -h mongo -n 1 keys 'effect:*' | wc -l #统计满足条件的key的数量
+{% endhighlight %}
+
+* redis-cli命令杂记
+{% highlight sh %}
+info commandstats #命令执行情况统计
+config resetstat #重置统计信息
+info keyspace #key数量
+dbsize #当前选择数据库的key个数
+info clients #查看当前连接的客户端数量
+client list #列出所有客户端
+config set timeout 3600 #设置客户端连接空闲超过3600秒，则自动断开
+{% endhighlight %}
+
+* 使用redis位图数据格式来统计用户访问次数，相关命令：getbit setbit bitcount
+{% highlight sh %}
+1. 以用户id为key，将每一天用一个小的整数来编码，从产品上线那天开始，0表示第一天，1表示第二天，以此类推。用bitcount就能统计出用户总共登录过多少天。
+2. 以时间date为key，将用户id（id需为数字）记录下来，这样就能得到每天有多少用户登录过，也很方便统计一段时间里，有多少用户登录过。
+注：当数据量特别大的时候，用bitcount的start和end参数来减少统计量。
+也可以使用字符串来存储，这样使用的存储空间略大一些，用1 byte来替代1 bit，相关命令：getrange setrange
+3. 当用户id不为数字时，以用户id为key，将日期编码为数字进行存储，容易统计一段时间里某个用户的登录情况。根据时间段取出相应range的字符串，统计里面的1出现的个数。
+{% endhighlight %}
+
+* 32位的redis最大只能使用4G内存
+
+* 可以使用LPUSH和LTRIM来维持一个固定长度的列表
