@@ -34,6 +34,24 @@ config set timeout 3600 #设置客户端连接空闲超过3600秒，则自动断
 3. 当用户id不为数字时，以用户id为key，将日期编码为数字进行存储，容易统计一段时间里某个用户的登录情况。根据时间段取出相应range的字符串，统计里面的1出现的个数。
 {% endhighlight %}
 
-* 32位的redis最大只能使用4G内存
+* 修改配置启动新实例
+{% highlight sh %}
+# 以下列出的配置项都需认真检查核对，并根据自己的情况修改，其它未列出的配置可根据需要自行调整
+daemonize yes
+pidfile /data/tmp/redis_26379.pid
+port 26379
+bind 10.117.199.79 127.0.0.1
+timeout 3600
+logfile /data/log/redis26379.log
+dbfilename redis_dump26379.rdb
+dir /data/redis
+appendonly yes
+appendfilename "appendonly26379.aof"
+appendfsync everysec
+{% endhighlight %}
 
+* 零碎知识点收集
+{% highlight sh %}
+* 32位的redis最大只能使用4G内存
 * 可以使用LPUSH和LTRIM来维持一个固定长度的列表
+{% endhighlight %}
