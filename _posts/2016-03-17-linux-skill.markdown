@@ -5,6 +5,17 @@ date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
 
+* 查看linux发行版的详细信息
+{% highlight sh %}
+lsb_release -a
+
+# LSB Version:    :core-4.1-amd64:core-4.1-noarch
+# Distributor ID: CentOS
+# Description:    CentOS Linux release 7.2.1511 (Core) 
+# Release:        7.2.1511
+# Codename:       Core
+{% endhighlight %}
+
 * bash中检查变量是否为空，`-n`检查非空为真，`-z`检查空为真
 {% highlight sh %}
 if [ -n "$VAR" ]; then
