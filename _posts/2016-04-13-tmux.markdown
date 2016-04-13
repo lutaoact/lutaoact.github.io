@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "tmux笔记整理"
+date:   2016-04-13 11:03:03 +0800
+categories: linux tmux
+---
+
+* centos7.2中，tmux窗口名称总是被莫名其妙地重置
+{% highlight sh %}
+sudo ln -s /usr/bin/true /etc/sysconfig/bash-prompt-screen
+# 在使用tmux或者screen时，可以阻止/etc/bashrc中把环境变量PROMPT_COMMAND设置成一个很长的名字，具体内容可以查看/ect/bashrc中关于该变量的设置逻辑
+{% endhighlight %}
