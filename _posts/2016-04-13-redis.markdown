@@ -23,6 +23,11 @@ dbsize #当前选择数据库的key个数
 info clients #查看当前连接的客户端数量
 client list #列出所有客户端
 config set timeout 3600 #设置客户端连接空闲超过3600秒，则自动断开
+
+# 慢日志相关
+slowlog get [num] #获取指定条数的日志
+slowlog len #当前长度
+slowlog reset #清空
 {% endhighlight %}
 
 * 使用redis位图数据格式来统计用户访问次数，相关命令：getbit setbit bitcount
