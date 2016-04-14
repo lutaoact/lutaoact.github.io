@@ -72,3 +72,13 @@ slowlog-max-len 65536
 * 32位的redis最大只能使用4G内存
 * 可以使用LPUSH和LTRIM来维持一个固定长度的列表
 {% endhighlight %}
+
+* 实践经验
+{% highlight sh %}
+* 充分利用redis的数据结构减少不必要的key数量。
+* 避免使用keys遍历，会对主线程造成长时间阻塞，当无法避免遍历时，可以使用scan来替代。
+  类似的，可以通过sscan来替代smembers之类的。
+* hash结构是个好东西，但是它只支持一级hash，当需要使用多级时，可自行通过序列化实现。
+* 注意客户端和服务端之间的网络通信情况--latency/--latency-history。
+* redis存取的key或value的最基本类型都是字符串，取回数据后记得要转换为自己需要的类型。
+{% endhighlight %}
