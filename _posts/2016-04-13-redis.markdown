@@ -7,21 +7,30 @@ categories: linux redis
 
 * linux bash命令杂记
 {% highlight sh %}
-redis-cli --raw #显示中文
-redis-cli -h mongo -n 1 keys 'effect:*' | wc -l #统计满足条件的key的数量
+redis-cli #以下是一些常用参数示例
+# --latency, --latency-history #用于测试客户端与服务器端之间的延迟
 
-telnet host port #可以用来连接redis，退出是使用命令quit，返回结果是redis数据传输协议的原始数据，没有解析和格式化，所以不是很好理解
+redis-cli --raw #可以显示中文
+redis-cli -h host -n 1 keys 'effect:*' | wc -l #统计满足条件的key的数量
+redis-cli -h <host> -p <port> -n <db> --bigkeys #通过采样才查找当前数据库最大的键
+
+#连接redis，退出时使用命令quit，返回结果是redis数据传输协议的原始数据，没有解析和格式化
+telnet host port
 {% endhighlight %}
 
 * redis-cli命令杂记
 {% highlight sh %}
 flushdb #清空当前数据库
+dbsize #当前选择数据库的key个数
+
 info commandstats #命令执行情况统计
 config resetstat #重置统计信息
 info keyspace #key数量
-dbsize #当前选择数据库的key个数
 info clients #查看当前连接的客户端数量
-client list #列出所有客户端
+
+client list #客户端信息，具体字段内容参考http://redis.io/commands/client-list
+
+# 修改配置
 config set timeout 3600 #设置客户端连接空闲超过3600秒，则自动断开
 
 # 慢日志相关
