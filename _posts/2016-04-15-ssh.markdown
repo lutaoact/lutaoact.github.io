@@ -1,0 +1,31 @@
+---
+layout: post
+title:  "ssh"
+date:   2016-04-15 15:21:45 +0800
+categories: linux ssh
+---
+
+* root用户登录选项，主要是关于PermitRootLogin选项的配置
+
+以下内容来自man sshd_config
+{% highlight text %}
+PermitRootLogin
+  Specifies whether root can log in using ssh(1). The argument must be "yes",
+  "without-password", "forced-commands-only", or "no". The default is "yes".
+
+  If this option is set to "without-password", password authentication is
+  disabled for root.
+
+  If this option is set to "forced-commands-only", root login with public key
+  authentication will be allowed, but only if the command option has been
+  specified (which may be useful for taking remote backups even if root login
+  is normally not allowed). All other authentication methods are disabled for
+  root.
+
+  If this option is set to "no", root is not allowed to log in.
+{% endhighlight %}
+如果希望root用户只能通过pubkey验证方式登录，可用如下设置：
+{% highlight text %}
+PasswordAuthentication yes
+PermitRootLogin without-password
+{% endhighlight %}
