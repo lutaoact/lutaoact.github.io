@@ -1,0 +1,25 @@
+---
+layout: post
+title:  "mongodb"
+date:   2016-04-15 12:13:50 +0800
+categories: mongodb server
+---
+
+* 客户端连接时，如果报以下warning：
+{% highlight text %}
+WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+       We suggest setting it to 'never'
+WARNING: /sys/kernel/mm/transparent_hugepage/defrag is 'always'.
+       We suggest setting it to 'never'
+{% endhighlight %}
+
+可以通过以下方式解决：
+{% highlight sh %}
+# 切换到root用户
+echo 'never' > /sys/kernel/mm/transparent_hugepage/enabled
+echo 'never' > /sys/kernel/mm/transparent_hugepage/defrag
+{% endhighlight %}
+
+具体原理，可以参考[mongo-doc][mongo-doc]
+
+[mongo-doc]: https://docs.mongodb.org/manual/tutorial/transparent-huge-pages/

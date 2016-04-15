@@ -61,7 +61,7 @@ sed -f 3_6 pets.txt #use file
 # BSD sed中，插入一段文本的做法
 sed -iold '1i\'$'\n''text to prepend'$'\n' file.txt
 {% endhighlight %}
-{% highlight sh %}
+{% highlight text %}
 # $'\n'是bash中的换行符，具体执行原理如下：
          sed -iold '1i\'$'\n''text to prepend'$'\n' file.txt
                       ^^^^^^^^                     ^
