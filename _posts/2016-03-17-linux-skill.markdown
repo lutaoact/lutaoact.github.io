@@ -7,11 +7,11 @@ categories: linux bash
 
 * 查看linux发行版的详细信息
 {% highlight sh %}
-lsb_release -a
+lsb_release -a #sudo yum install redhat-lsb-core
 
 # LSB Version:    :core-4.1-amd64:core-4.1-noarch
 # Distributor ID: CentOS
-# Description:    CentOS Linux release 7.2.1511 (Core) 
+# Description:    CentOS Linux release 7.2.1511 (Core)
 # Release:        7.2.1511
 # Codename:       Core
 {% endhighlight %}
