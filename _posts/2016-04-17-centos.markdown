@@ -1,0 +1,11 @@
+---
+layout: post
+title:  "centos"
+date:   2016-04-17 22:30:14 +0800
+categories: centos
+---
+
+* yum
+{% highlight sh %}
+yum provides <command> # 查看提供command命令的包列表
+{% endhighlight %}
