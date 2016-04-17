@@ -13,7 +13,7 @@ categories: github-pages bundle jekyll
 {% highlight sh %}
 # ruby源总是连不上，使用国内的镜像源
 gem sources -l #查看源列表
-gem sources --add https://ruby.taobao.org/ --remove https://rubygems.org #修改源地址
+gem sources --add https://ruby.taobao.org/ --remove https://rubygems.org/ #修改源地址
 
 # 安装bundle命令
 sudo gem install bundler
@@ -25,5 +25,8 @@ bundle install
 bundle exec jekyll serve
 {% endhighlight %}
 
+修改ruby的镜像源，可以参考[链接][ruby-mirror]
+
 [github-pages]: https://pages.github.com/
 [setup-jekyll-locally]: https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/
+[ruby-mirror]: https://ruby.taobao.org/
