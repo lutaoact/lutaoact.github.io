@@ -46,8 +46,8 @@ moment.locale();//获取当前的locale
 
 * 日期运算
 {% highlight js %}
-console.log(moment().subtract('1', 'w').startOf('week'));
-console.log(moment().add('1', 'w').endOf('week'));
+moment().subtract('1', 'w').startOf('week');
+moment().add('1', 'w').endOf('week');
 {% endhighlight %}
 
 查阅[moment docs][moment-docs]获取详细帮助。
