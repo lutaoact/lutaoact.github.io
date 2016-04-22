@@ -5,6 +5,11 @@ date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
 
+* 删除当前目录中最大的10个文件或目录
+{% highlight sh %}
+du -s * | sort -k1 -nr | head -n 10 | awk '{print $2}' | xargs rm -rf
+{% endhighlight %}
+
 * 查看linux发行版的详细信息
 {% highlight sh %}
 lsb_release -a #sudo yum install redhat-lsb-core
