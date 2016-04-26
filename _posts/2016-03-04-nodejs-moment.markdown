@@ -45,6 +45,19 @@ moment.locale();//获取当前的locale
 {% endhighlight %}
 
 * 日期运算
+日期运算的省略形式
+{% highlight js %}
+years => y
+quarters => Q
+months => M
+weeks => w
+days => d
+hours => h
+minutes => m
+seconds => s
+milliseconds => ms
+{% endhighlight %}
+
 {% highlight js %}
 moment().subtract('1', 'w').startOf('week');
 moment().add('1', 'w').endOf('week');
