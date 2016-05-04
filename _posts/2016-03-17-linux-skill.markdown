@@ -5,6 +5,39 @@ date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
 
+* cd命令使用
+{% highlight sh %}
+export CDPATH=~:/data
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+
+shopt -s cdspell #纠正简单的拼写错误
+{% endhighlight %}
+
+* grep命令：
+{% highlight sh %}
+-c #所有匹配的行
+-i #忽略大小写
+-r #搜索子目录
+-l #匹配的文件名
+-w #搜索单词，而不是子字符串
+-A/-B/-C #显示匹配行的上下文
+-e #指定匹配模式 grep -v -e "pattern" -e "pattern"
+-o, --only-matching #只显示匹配的字符串
+-b, --byte-offset #匹配位置，是对于整个文件而言的，而不是匹配的那一行
+-n #显示匹配行号
+{% endhighlight %}
+
+* 封锁标准输出或错误
+{% highlight sh %}
+> /dev/null  #封锁标准输出，只能看到错误
+2> /dev/null #封锁错误消息
+> /dev/null 2>&1 #错误流重定向，并且都封锁，在cron中比较常见
+{% endhighlight %}
+
 * ubuntu修改root用户的初始密码
 {% highlight sh %}
 sudo passwd
