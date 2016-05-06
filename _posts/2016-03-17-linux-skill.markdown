@@ -5,6 +5,14 @@ date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
 
+* xargs命令：
+{% highlight sh %}
+find ~ -name '*.log' -print0 | xargs -0 rm -f #以\0字符分隔文件名列表，处理文件名中含有空格的情况
+find /etc -name "*.conf" | xargs ls –l
+find . -name *.jpg -type f -print | xargs tar cvzf images.tar.gz #打包所有图片
+cat url-list.txt | xargs wget –-continue #下载一个文件中的所有url
+{% endhighlight %}
+
 * cd命令使用
 {% highlight sh %}
 export CDPATH=~:/data
