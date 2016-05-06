@@ -4,6 +4,14 @@ title:  "linux笔记整理"
 date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
+* uniq的用法：（只能进行相邻行的比较，所以一般用在sort之后）
+{% highlight sh %}
+-c #进行计数
+-i #忽略大小写
+-d #只输出重复过的行
+-u #只输出为重复过的行
+{% endhighlight %}
+
 * sort的用法：
 {% highlight sh %}
 -n #按数值排序
