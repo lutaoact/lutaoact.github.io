@@ -6,6 +6,12 @@ categories: mongodb server
 ---
 
 ## 复制集
+
+### 初始化同步的两种方式
+1. 以空数据目录启动slave服务器
+2. 复制master数据目录到slave，然后启动slave服务器。（需要master停机操作）
+
+### 注意：
 {% highlight js %}
 //使slave可读，解决{"errmsg" : "not master and slaveOk=false", "code" : 13435 }
 db.getMongo().setSlaveOk();
