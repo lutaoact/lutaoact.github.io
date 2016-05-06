@@ -4,6 +4,18 @@ title:  "linux笔记整理"
 date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
+* sort的用法：
+{% highlight sh %}
+-n #按数值排序
+-r #反向排序
+-k5 #以第5个字段的值排序
+-k5r #以第5个字段的值倒排
+-t: #以:作为分隔符，默认用tab分隔
+-o #支持将排序结果写入原文件
+-f #忽略大小写
+-b #忽略前导空白
+-u #uniq的方式排序
+{% endhighlight %}
 
 * xargs命令：
 {% highlight sh %}
