@@ -26,6 +26,11 @@ categories: mongodb server
 ### 注意：
 * 必须使用mongo shell来配置副本集，没有其它方法可以基于文件对副本集进行配置。
 * 只有达到大多数的情况下才能选举或维持主节点，这样是为了避免出现多个主节点。
+* 尽可能在副本集中使用奇数个数据成员，而不要使用仲裁者。
+* 优先级为0的成员永远不能够成为主节点，这样的成员被称为被动成员(passive member).
+* 隐藏成员{hidden: true}. 客户端不向隐藏成员发送请求。
+* 延迟备份节点{slaveDelay: num}，以秒为单位。要求成员的优先级为0. 应该隐藏延迟备份节点，以免读请求被路由到这里。
+* {buildIndexes: false}, 不创建索引。这是一个永久选项，成员永远无法恢复为可以创建索引的正常成员。也要求成员的优先级为0.
 * 使slave可读
 {% highlight js %}
 //解决{"errmsg" : "not master and slaveOk=false", "code" : 13435 }
@@ -36,14 +41,17 @@ db.getMongo().setSlaveOk();
 primaryDB.adminCommand({shutdown: 1});
 {% endhighlight %}
 * rs辅助函数
-{% highlight sh %}
+{% highlight js %}
 rs.conf();//当前配置
 rs.status();//当前运行状态
 rs.reconfig(config);//参数可以是任意合法的配置文档config
 rs.add("host:port");//增加成员
 rs.remove("host:port");//删除成员
-{% endhighlight %}
 
+//增加仲裁者 成员一旦以仲裁者的身份添加到副本集中，它就永远只能是仲裁者。
+//无法将仲裁者重新配置为非仲裁者，反之亦然。
+rs.addArb("host:port");
+{% endhighlight %}
 
 ## 其它小知识
 * 客户端连接时，如果报以下warning：
