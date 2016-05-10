@@ -16,13 +16,32 @@ categories: mongodb server
 1. 以空数据目录启动slave服务器
 2. 复制master数据目录到slave，然后启动slave服务器。（需要master停机操作）
 
-### 注意：
-* 必须使用mongo shell来配置副本集，没有其它方法可以基于文件对副本集进行配置
-{% highlight js %}
-//使slave可读，解决{"errmsg" : "not master and slaveOk=false", "code" : 13435 }
-db.getMongo().setSlaveOk();
+### 选举机制
+当一个备份节点无法与主节点连通时，他就会联系并请求其它的副本集成员将自己选举为主节点。其它成员会做几项检查：
 
-primaryDB.adminCommand({shutdown: 1});//关闭主服，可以用来测试故障转移
+1. 自身是否能够与主节点连通？
+2. 希望被选举为主节点的备份节点的数据是否最新？
+3. 有没有其它更高优先级的成员可以被选举为主节点？
+
+### 注意：
+* 必须使用mongo shell来配置副本集，没有其它方法可以基于文件对副本集进行配置。
+* 只有达到大多数的情况下才能选举或维持主节点，这样是为了避免出现多个主节点。
+* 使slave可读
+{% highlight js %}
+//解决{"errmsg" : "not master and slaveOk=false", "code" : 13435 }
+db.getMongo().setSlaveOk();
+{% endhighlight %}
+* 关闭主服，用来测试故障转移能否顺利完成
+{% highlight js %}
+primaryDB.adminCommand({shutdown: 1});
+{% endhighlight %}
+* rs辅助函数
+{% highlight sh %}
+rs.conf();//当前配置
+rs.status();//当前运行状态
+rs.reconfig(config);//参数可以是任意合法的配置文档config
+rs.add("host:port");//增加成员
+rs.remove("host:port");//删除成员
 {% endhighlight %}
 
 
