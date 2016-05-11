@@ -5,8 +5,18 @@ date:   2016-04-13 11:03:03 +0800
 categories: linux tmux
 ---
 
+## 操作指令
+{% highlight text %}
+Ctrl-B space #均分窗口，其实是变换pane的排布样式
+Ctrl-B c     #新建窗口
+Ctrl-B ,     #修改窗口名称
+Ctrl-B %     #垂直分隔窗口
+Ctrl-B "     #水平分隔窗口
+{% endhighlight %}
+
 * centos7.2中，tmux窗口名称总是被莫名其妙地重置
 {% highlight sh %}
 sudo ln -s /usr/bin/true /etc/sysconfig/bash-prompt-screen
-# 在使用tmux或者screen时，可以阻止/etc/bashrc中把环境变量PROMPT_COMMAND设置成一个很长的名字，具体内容可以查看/ect/bashrc中关于该变量的设置逻辑
+# 在使用tmux或者screen时，可以阻止/etc/bashrc中把环境变量PROMPT_COMMAND
+# 设置成一个很长的名字，具体内容可以查看/ect/bashrc中关于该变量的设置逻辑
 {% endhighlight %}
