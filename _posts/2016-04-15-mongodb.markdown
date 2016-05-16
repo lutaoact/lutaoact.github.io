@@ -64,6 +64,12 @@ rs.initiate(config);
 * 隐藏成员{hidden: true}. 客户端不向隐藏成员发送请求。
 * 延迟备份节点{slaveDelay: num}，以秒为单位。要求成员的优先级为0. 应该隐藏延迟备份节点，以免读请求被路由到这里。
 * {buildIndexes: false}, 不创建索引。这是一个永久选项，成员永远无法恢复为可以创建索引的正常成员。也要求成员的优先级为0.
+* 修改配置防止复制链的产生，在PRIMARY库的shell中执行以下代码
+{% highlight js %}
+var config = rs.config();
+config.settings.chainingAllowed = false;
+rs.reconfig(config);
+{% endhighlight %}
 * 使slave可读
 {% highlight js %}
 //解决{"errmsg" : "not master and slaveOk=false", "code" : 13435 }

@@ -20,6 +20,7 @@ telnet host port
 
 * redis-cli命令杂记
 {% highlight sh %}
+shutdown #安全关机
 flushdb #清空当前数据库
 dbsize #当前选择数据库的key个数
 
