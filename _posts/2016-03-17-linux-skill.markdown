@@ -73,6 +73,11 @@ sudo passwd
 # 提示输入新密码，这里设置的就是root密码，设置成功，可用su切换为root用户
 {% endhighlight %}
 
+* 在脚本中为sudo提供密码
+{% highlight sh %}
+echo 'password' | sudo -S command
+{% endhighlight %}
+
 * 删除当前目录中最大的10个文件或目录
 {% highlight sh %}
 du -s * | sort -k1 -nr | head -n 10 | awk '{print $2}' | xargs rm -rf
