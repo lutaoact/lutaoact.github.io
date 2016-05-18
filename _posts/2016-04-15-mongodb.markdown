@@ -17,9 +17,9 @@ categories: mongodb server
 2. 复制master数据目录到slave，然后启动slave服务器。（需要master停机操作）
 
 ### 将包含数据的单机服务器扩展为复制集（需要停机操作）
-假设单机服务器的host为server-1，另外两台分别为server-2，server-3
+假设单机服务器的host为host1，另外两台分别为host2，host3
 
-* 以复制集的方式启动服务器server-1
+* 以复制集的方式启动服务器host1
 {% highlight sh %}
 # 在命令行参数中用--replSet指定复制集名称
 /usr/bin/mongod --replSet replName --config /etc/mongod.conf
@@ -30,22 +30,22 @@ replication:
 {% endhighlight %}
 * 配置复制集
 {% highlight sh %}
-mongo server-1:27017 #连接到服务器
+mongo host1:27017 #连接到服务器
 {% endhighlight %}
 {% highlight js %}
 //在mongo shell中执行
 var config = {
   _id: 'gpws',
   members: [
-    {_id: 0, host: 'server-1:27017'},
-    {_id: 1, host: 'server-2:27017'},
-    {_id: 2, host: 'server-3:27017'},
+    {_id: 0, host: 'host1:27017'},
+    {_id: 1, host: 'host2:27017'},
+    {_id: 2, host: 'host3:27017'},
   ],
 };
 rs.initiate(config);
 //复制集需要一段时间进行拓扑结构识别，确定主备关系，大概1分钟之内吧
 //然后敲回车，就会在提示符中出现replName:PRIMARY>
-//server-1因为本身包含数据，会成为主库，另外两台会成为备库
+//host1因为本身包含数据，会成为主库，另外两台会成为备库
 //当数据同步全部完成之后，它们的角色可能会再次变动，不过那都已经是复制集内部的事了
 {% endhighlight %}
 
