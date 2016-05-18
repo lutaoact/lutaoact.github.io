@@ -92,6 +92,13 @@ rs.remove("host:port");//删除成员
 rs.addArb("host:port");
 {% endhighlight %}
 
+### 相关命令使用
+{% highlight sh %}
+# 连接复制集，host部分的参数值格式为replSetName/host1,host2[,...]
+mongo --host replSetName/host1,host2 dbname scripts.js
+mongoimport -h replSetName/host1,host2 -d dbname -c coll --jsonArray backupfile
+{% endhighlight %}
+
 ## 其它小知识
 * 客户端连接时，如果报以下warning：
 {% highlight text %}
