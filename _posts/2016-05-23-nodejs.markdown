@@ -1,0 +1,22 @@
+---
+layout: post
+title:  "nodejs相关"
+date:   2016-05-23 21:22:28 +0800
+categories: nodejs
+---
+
+## 零碎知识点
+* 可以利用request模块的pipe来实现文件下载，
+{% highlight js %}
+let stream = request(url).pipe(fs.createWriteStream(filename));
+
+//监听结束事件，所有的stream都是EventEmitter的实例
+stream.on('finish', () => {
+  console.log('finish download');
+});
+stream.on('error', (err) => {
+  console.log(err);
+});
+{% endhighlight %}
+
+[参考github文档](https://github.com/request/request)
