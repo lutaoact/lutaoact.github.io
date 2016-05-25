@@ -4,6 +4,18 @@ title:  "linux笔记整理"
 date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
+* scp命令：
+{% highlight sh %}
+usage: scp [-12346BCEpqrv] [-c cipher] [-F ssh_config] [-i identity_file]
+           [-l limit] [-o ssh_option] [-P port] [-S program]
+           [[user@]host1:]file1 ... [[user@]host2:]file2
+{% endhighlight %}
+{% highlight sh %}
+-3 #当在两个远程服务器之间复制文件时，使用本地服务器作为中转
+-P #指定端口，ssh指定端口参数使用-p，注意区分
+-i #指定认证文件，和ssh一样
+{% endhighlight %}
+
 * uniq的用法：（只能进行相邻行的比较，所以一般用在sort之后）
 {% highlight sh %}
 -c #进行计数
@@ -27,7 +39,9 @@ categories: linux bash
 
 * xargs命令：
 {% highlight sh %}
-find ~ -name '*.log' -print0 | xargs -0 rm -f #以\0字符分隔文件名列表，处理文件名中含有空格的情况
+#以\0字符分隔文件名列表，处理文件名中含有空格的情况
+find ~ -name '*.log' -print0 | xargs -0 rm -f
+
 find /etc -name "*.conf" | xargs ls –l
 find . -name *.jpg -type f -print | xargs tar cvzf images.tar.gz #打包所有图片
 cat url-list.txt | xargs wget –-continue #下载一个文件中的所有url
