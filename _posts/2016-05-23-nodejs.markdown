@@ -9,6 +9,8 @@ categories: nodejs
 * 可以利用request模块的pipe来实现文件下载，
 {% highlight js %}
 let stream = request(url).pipe(fs.createWriteStream(filename));
+//如果url中包含中文字符，则可能会下载出错，需要使用encodeURI(url)处理，即
+//let stream = request(encodeURI(url)).pipe(fs.createWriteStream(filename));
 
 //监听结束事件，所有的stream都是EventEmitter的实例
 stream.on('finish', () => {
