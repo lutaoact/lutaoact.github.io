@@ -175,3 +175,17 @@ EOF
 echo "$CMD" #必须要有双引号，可以保留换行
 su --login centos -c "$CMD" #以centos用户来执行命令
 {% endhighlight %}
+
+* 获取CPU核数
+{% highlight sh %}
+cat /proc/cpuinfo | grep -c processor
+{% endhighlight %}
+
+* 查看系统是32位还是64位的方法
+{% highlight text %}
+uname -a
+file /bin/ls
+getconf LONG_BIT
+arch
+cat /proc/cpuinfo | grep -c 'flags.*lm' #lm指long mode, 支持lm则是64bit
+{% endhighlight %}
