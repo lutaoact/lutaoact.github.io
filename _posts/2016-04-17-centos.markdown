@@ -9,3 +9,8 @@ categories: centos
 {% highlight sh %}
 yum provides <command> # 查看提供command命令的包列表
 {% endhighlight %}
+
+* centos下`g++`安装包名字叫做：`gcc-c++`
+{% highlight sh %}
+sudo yum -y install gcc-c++
+{% endhighlight %}

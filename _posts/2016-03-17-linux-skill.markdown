@@ -4,6 +4,20 @@ title:  "linux笔记整理"
 date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
+* tar命令：
+{% highlight sh %}
+tar cvf[i] xxxx.tar[.ext] filelist
+tar xvf[i] xxxx.tar[.ext]
+
+# [i]是处理不同格式文件时的指示符，与[.ext]的对应关系如下
+z => .gz
+j => .bz2
+J => .xz
+
+# .7z格式的文件，需要安装p7zip包，使用7z命令
+7z x xxxx.7z
+{% endhighlight %}
+
 * scp命令：
 {% highlight sh %}
 usage: scp [-12346BCEpqrv] [-c cipher] [-F ssh_config] [-i identity_file]
@@ -166,10 +180,11 @@ su --login centos -c "$CMD" #以centos用户来执行命令
 {% highlight sh %}
 #镜像地址 http://www.gnu.org/prep/ftp.html，找一个比较快的
 wget http://mirrors.ustc.edu.cn/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.bz2
-tar xvfj gcc-5.3.0.tar.gz
+tar xvfj gcc-5.3.0.tar.bz2
 cd gcc-5.3.0
 
 #下载依赖mpfr gmp mpc isl，这个比自己手动下载要方便很多
+#如果下载过程太慢，直接编辑脚本中的下载地址，也可以给wget加上-c参数，断线续传
 ./contrib/download_prerequisites
 
 ./configure --disable-multilib #--prefix=/usr，默认为/usr/local
@@ -183,9 +198,4 @@ make install
 
 #如果默认安装路径/usr/local，需要转到/usr目录下
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/local/bin/gcc 40
-{% endhighlight %}
-
-* centos下`g++`安装包名字叫做：`gcc-c++`
-{% highlight sh %}
-sudo yum -y install gcc-c++
 {% endhighlight %}
