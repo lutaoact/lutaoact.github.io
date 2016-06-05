@@ -1,0 +1,274 @@
+---
+layout: post
+title:  "git使用笔记"
+date:   2016-06-05 22:04:40 +0800
+categories: git
+---
+
+{% highlight sh %}
+git clone <url> #克隆版本库
+git clone <url> <repo_name> #克隆版本库，并将文件夹命名为repo_name
+git clone -b <branch> #签出指定分支，也可以用--branch
+{% endhighlight %}
+
+{% highlight sh %}
+git init #初始化新版本库，目录中生成一个.git文件夹
+git init --bare #创建一个无本地分支的库，当需要一个公共的中央库时，初始化为bare
+{% endhighlight %}
+
+{% highlight sh %}
+git status #当前状态
+{% endhighlight %}
+
+{% highlight sh %}
+git add <file list> #将文件加入跟踪或者将修改后的文件放入暂存区（staging area）
+git add -u #只增加修改过的文件，新增的文件不加入
+git add -i #进入互动模式，可以看到修改的行数信息，stage或unstage每个文件的变化
+{% endhighlight %}
+
+{% highlight sh %}
+git rm <file> #git删除文件
+git mv <old_file> <new_file> #git重命名文件
+{% endhighlight %}
+
+{% highlight sh %}
+git checkout HEAD <file list> 或者 git checkout -- <file list> #撤销指定文件列表尚未暂存的修改
+git checkout HEAD . #撤销所有尚未暂存的修改
+git checkout <版本号> . #将所有文件都恢复到指定版本号所在的状态
+
+git reset HEAD 或者 git reset HEAD <file list> #撤销指定文件列表尚未提交的修改
+git reset <版本号> #撤销指定版本号之后的所有提交
+git reset --merge #Git1.7.0之后，用于取消一个有冲突的merge
+git reset --merge/--keep <rev_id> #--keep重置index中的内容，但工作区不会改变，而--merge会连工作区也一起重置
+
+git commit #提交当前暂存区的修改
+git commit -m '<message>' #输入提交信息，跳过文件编辑message阶段
+git commit -a #直接提交所有修改的文件，跳过暂存阶段，但新增加的文件还需要先add
+git commit -v #提示当前commit的修改记录
+git commit --amend #修改最后一次提交的message
+git commit --amend --author='Your Name <you@example.com>' #修改最近一次提交
+git commit --allow-empty #进行一次空提交
+
+git diff #显示当前位置与暂存区的差异
+git diff --cached #显示已经暂存的文件和上次提交时的快照之间的差异
+git diff <file> #显示file文件还没有暂存起来的变化内容
+git diff --cahced <file> #显示已经暂存的file文件和上次提交时的快照之间的差异
+git diff <前版本号>..<后版本号> #比较两个版本号之间的差异
+git diff <前版本号>..<后版本号> <file> #比较指定文件在两个版本号之间的差异
+git diff --name-only <前版本号>..<后版本号> #列出所有的文件名
+git diff <版本号>..<版本号> --shortstat #统计指定版本号之间的总的统计信息
+git diff --name-only --diff-filter=[AMD] #过滤出新增、修改和删除的文件列表
+git diff --no-color --binary --no-prefix <dir1/file> <dir2/file> > patch.diff #git对补丁文件的扩展。可以在非git版本库中使用
+git diff --color-words #为单词着色
+
+git log #历史记录
+git log <file/directory> #查看file或directory的所有log
+git log -p #详细日志，包括文件变动明细
+
+git blame <file> #关于file的每一行，最后一次的commit记录
+
+git show <版本号> #查看指定版本号的提交内容
+git show <tag> #查看指定tag的提交內容
+git show <tag>:<file> #查看指定tag中file文件的修改内容
+git show HEAD #查看此版本提交的内容
+git show HEAD^ #查看上一版本（父版本）提交的内容
+git show HEAD^^ #查看（祖父版本）提交的内容
+git show HEAD~4 #查看第四个祖先提交的内容
+git show <branch>:<file> #查看指定分支上的某个文件的内容
+
+git stash #丢进暂存区
+git stash list #列出所有暂存区的资料
+git stash pop #取出最新的一次暂存的资料, 并从暂存区移除
+git stash pop stash@{<index>} #取出index指定的暂存，并从暂存区移除
+git stash drop stash@{<index>} #直接删除指定暂存
+git stash apply #取出最新的一次暂存的资料, 但不从暂存区移除
+git stash show -p stash@{<index>} | git apply -R #取消apply过的指定stash
+git stash clear #清理stash
+
+git remote #显示远程仓库名称
+git remote -v #显示远程仓库名称和地址
+git remote show #同git remote
+git remote show <remote> #查看名为remote的远程仓库
+git remote add <remote> <remote_url> #添加远程库的别名
+git remote set-url origin https://lutaoact@github.com/lutaoact/repo.git #设置新的库地址
+git remote rm <remote> #删除远程库和相关分支
+git remote prune origin --dry-run #清理所有无效的跟踪分支，--dry-run会先展示所有将要清理的列表
+
+git pull #获取并合并到当前本地分支
+git pull --rebase #保持直线log，先将远程变化pull到本地，再将本地的改变rebase到分支上去
+git pull <remote> <branch> #获取remote库branch分支，并合并到本地的branch分支
+git pull <remote> <remote_branch>:<local_branch> #提取远程的remote_branch，并更新到local_branch
+
+git push <remote> <branch> #提取本地的branch分支，并更新到远程仓库的branch分支
+git push -u <remote> <branch> #下次在当前分支push时，可直接执行git push，因为-u参数默认设置了跟踪信息
+git push <remote> <local_branch>:<remote_branch> #提取本地的local_branch分支，并更新到远程仓库的分支remote_branch，如果remote_branch不存在，则在远程仓库新建remote_branch分支
+git push <remote> :<remote_branch> #删除远程分支remote_branch
+git push -f #强制更新远程分支，慎重使用
+
+git checkout -b <local_branch> <remote>/<remote_branch> #在本地新建local_branch分支，用来跟踪远程的remote_branch分支
+git checkout -B #强制建立分支
+git checkout --track <remote>/<branch> #在本地新建branch分支，用来跟踪远程的branch分支（git1.6.2之后）
+git checkout <branch> #检出分支，若分支不存在，尝试检出remote/branch，并设置跟踪
+git checkout -b <branch> #基于当前分支的末梢创建新分支并检出分支
+
+git branch #列出本地分支
+git branch -r #列出远程分支
+git branch -a #列出所有分支
+git branch -v #每个分支最后的提交
+git branch --merged #列出已被merge到当前分支的分支列表，也就是这些分支是当前分支的直接上游。
+git branch --no-merged #列出未被merge到当前分支的分支列表
+git branch <branch> #基于当前分支的末梢创建新分支
+git branch <branch> <提交、分支或标签> #基于某次提交、分支或标签创建新分支，用来查看某个历史断面很方便
+git branch --set-upstream-to=<remote_branch> <local_branch> #设置跟踪信息
+
+git branch -m <old_branch> <new_branch> #重命名分支，不会覆盖已存在的同名分支
+git branch -M <old_branch> <new_branch> #重命名分支，会覆盖已存在的同名分支
+git branch -d <branch> #如果分支没有被合并，会删除失败
+git branch -D <branch> #即使分支没有被合并，也可以删除
+
+git fetch <remote> #获取但不合并
+git fetch <remote> <remote_branch> #获取指定远程分支，得到FETCH_HEAD版本号，可以通过git checkout -b <new_branch> FETCH_HEAD来建立新的分支来跟踪远程分支
+git merge <remote>/<remote_branch> #将指定远程分支合并到当前分支，一般在git fetch之后执行
+git merge <branch> #将branch合并到当前分支并提交，如果发生了冲突，就不会自动提交，如果冲突很多，不想立即解决它们，可以直接使用git checkout HEAD .撤销，也可以运行git mergetool来解决，程序会自动引导
+git merge --no-ff #--no-fast-forword，强制产生一个merge的commit
+
+git tag <tag> #为当前分支最近一次提交创建tag，注意tag无法重命名
+git tag <tag> <branch> #为branch分支最近一次提交创建tag
+git tag <tag> <版本号> #为某次历史提交创建tag
+git tag #显示标签列表
+git tag -d <tag> #删除标签
+git tag -f <tag> <rev_id> #强制更新已存在的tag
+git checkout <tag> #检出标签，查看标签断面的方便方法
+git checkout -b <branch> <tag> #由标签创建分支
+
+git config --global user.name "<name>" #修改的是~/.gitconfig文件
+git config --global user.email "<email>"
+git config --global core.editor vim
+git config --global diff.tool vimdiff
+git config --global merge.tool vimdiff #设置merge工具
+git config --global difftool.prompt false #不要每次提醒选择difftool
+git config --global push.default <current/matching> #推荐设置为current，在执行git push的时候，只push当前分支
+git config --global color.ui auto/always #推荐设置为auto，否则在重定向到文件的时候，会在文件中写入终端的颜色转义码，这种bug很难找
+git config --global core.autocrlf false #windows中使用时，不会自动把LF转化为CRLF了
+
+git config --global gui.encoding utf-8
+git config --global i18n.commitEncoding utf-8
+git config --global i18n.logOutputEncoding utf-8
+git config --global core.quotepath false #在git status中显示中文文件名
+
+git config --global core.whitespace cr-at-eol #行尾的回车符不是错误
+
+git config --global --get <key> #取得指定key的值
+git config --global --list #显示当前git环境变量配置列表
+git config --global alias.<co> <command> #用来设置command命令的别名，git command可以用git co来替代
+git config --global credential.helper osxkeychain #mac缓存密码
+git config --global credential.helper 'cache --timeout=3600' #linux缓存密码
+
+git config user.name "<name>" #针对单个源的配置，编辑的是.git/config文件
+git config branch.<branch>.rebase true #git pull相当于git pull --rebase
+git config http.proxy 127.0.0.1:8123 #设置http代理
+git config core.pager 'less -x4' #设置tab的宽度为4
+
+git log --grep=<pattern> #找出message可以成功匹配指定模式的commit
+git log --numstat #输出结果为3列，分别为插入行数、删除行数和文件名
+git log --shortstat #commit message的首行内容和文件变动统计结果
+git log --stat --summary #查每个版本间的修改文件和行数
+git log --stat #显示文件改动的统计结果
+git log --no-merges #不展示关于merge的log
+git log --since="2 weeks ago" #最近两周的log
+git log --pretty=oneline #单行显示log，等号两边不能留空格，显示完整的版本号
+git log --oneline #单行显示log，只显示版本号的前7位
+git log --name-status #显示改动的文件名和模式（A代表Add，M代表Modify）
+git log --name-only #只显示提交的文件名
+git log --pretty=short #只显示commit message的首行内容
+git log --graph #分支图形化
+git log --abbrev-commit #使用短版本号，默认为7位，会根据需要自动加长
+git log commit1..commit2 --format="" --name-only | sort | uniq #取出两个commit之间变动文件的所有文件名，包括那些已经revert的
+
+git bundle create <file> <git-rev-list-args> #制造bundle
+
+git clean -n #列出将要清楚的文件列表
+git clean -df #强制清除未跟踪的文件和目录
+
+git format-patch <版本号> #把指定版本号（不包括）之后的每次commit生成为一个.patch文件
+git merge-base <branch1> <branch2> #找出两个分支的分叉之前的共同祖先，会得到一个版本号
+git diff <branch1>...<branch2> #两个分支分叉之后，branch2相对于branch1所做的所有更新，注意三点语法
+git log <branch2> --not <branch1> #branch2上的有，但branch1上没有的log
+git rev-parse <branch> #获取分支所指向的当前版本号
+git reflog #获取分支操作的记录
+git show-ref #显示所有ref的列表
+git show HEAD@{<index>} #显示reflog中index指定的记录内容
+git log --left-right <branch1>...<branch2> #展示两个分支从共同祖先分叉之后的所有commit记录，输出中"<"代表左边分支的记录，">"代表右边分支的记录。注意：三点运算符
+git filter-branch --tree-filter 'rm -f <file>' HEAD #从每一个commit中删除指定文件
+git cherry-pick <版本号> #将某次commit应用到当前分支
+git cherry-pick <版本号>..<版本号> #将指定区间应用到当前分支，若出现冲突，解决冲突后git cherry-pick --continue
+git diff --no-color <rev1>..<rev2> > file.diff #将两次版本号之间的所有修改生成一个diff文件
+git apply --reject file.diff #无法合并的文件，生成对应的.rej文件，可以根据.rej文件手动合并
+git apply -R file.diff #反向应用补丁
+git grep 'pattern' <branch> <file> #在指定分支的文件上执行grep命令
+git revert <rev_id> #反向提交
+git credential-osxkeychain #测试mac密码缓存能否成功
+
+git archive -o ../updated.zip HEAD $(git diff --name-only HEAD^) #最近提交的修改内容到一个zip文件中
+git archive -o ../latest.zip NEW_COMMIT_ID_HERE $(git diff --name-only OLD_COMMIT_ID_HERE NEW_COMMIT_ID_HERE) #输出某两个提交间的改变
+
+#只克隆远程仓库的一个指定分支，而不是整个仓库分支
+git init
+git remote add -f -t BRANCH_NAME_HERE origin REMOTE_REPO_URL_PATH_HERE
+git checkout BRANCH_NAME_HERE
+
+#开始一个不带历史记录的新分支
+git checkout --orphan NEW_BRANCH_NAME_HERE
+
+#忽略已追踪文件的变动
+git update-index --assume-unchanged PATH_TO_FILE_HERE
+
+git rev-parse --show-cdup
+git rev-parse --git-dir
+git rev-parse --show-toplevel
+git rev-parse --show-prefix
+
+命令自动补全：
+复制git源码包中的contrib/completion/git-completion.bash到~/.git-completion.bash
+然后source ~/.git-completion.bash
+在/etc/bashrc中加入：
+if [ -f ~/.git-completion.bash ]; then
+    . ~/.git-completion.bash
+fi
+注：mac中的源码路径为/Applications/SourceTree.app/Contents/Resources/git_local/contrib/completion/git-completion.bash
+linux中的源码路径为/usr/share/doc/git-1.7.1/contrib/completion/git-completion.bash
+
+git rm --cache filename #从库中删除，本地保留
+#要查看某个文件的以前的版本,使用 git show 命令
+git show 0b26bbe907c929ed88f6ba3dfeaaa9a2953b1c56:a.txt
+git cat-file blob 0b26bbe907c929ed88f6ba3dfeaaa9a2953b1c56:a.txt
+
+不仅仅一次提交后会产生一个sha1的字符串，其实每一个提交对应的文件也会有一个状态
+比如我想杳看0b26bbe907c929ed88f6ba3dfeaaa9a2953b1c56这次提交后，文件所对应的sha1值
+可以使用git ls-tree命令
+比如
+git ls-tree 0b26bbe907c929ed88f6ba3dfeaaa9a2953b1c56
+100644 blob 83c4ba189edcc364ca18b0b7d2cd81655d97adc5    a
+100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391    d
+比如此次提交后文件a与d分别对应的sha1值列了出来,然后就可以直接用这个值去查看相应的文件
+以下两种方式效果相同
+git show 83c4ba189edcc364ca18b0b7d2cd81655d97adc5 #直接查看blob的值
+git show 0b26bbe907c929ed88f6ba3dfeaaa9a2953b1c56:a #或者查看commit中对应的文件
+
+git log -g #找到我们需要恢复的信息对应的commitid
+
+#找回库中不再管理的已删除文件(之前git rm 过且git commit 后的文件)
+git log --all --pretty=format: --name-only --diff-filter=D | grep -v '^$'
+
+git filter-branch --msg-filter 'sed s/oldpass/newpasswd/' -f HEAD --all
+git filter-branch --msg-filter 'sed -e "/^git-svn-id:/d"'
+git filter-branch --tree-filter 'rm -rf files_to_remove' --prune-empty -f HEAD --all
+git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch filename' --prune-empty HEAD
+--tree-filter表示修改文件列表。
+--msg-filter表示修改提交信息，原提交信息从标准输入读入，新提交信息输出到标准输出。
+--prune-empty表示如果修改后的提交为空则扔掉不要。在一次试运行中我发现虽然文件被删除了，但是还剩下个空的提交，就查了下 man 文档，找到了这个选项。
+-f是忽略备份。不加这个选项第二次运行这个命令时会出错，意思是 git 上次做了备份，现在再要运行的话得处理掉上次的备份。
+--all是针对所有的分支。
+
+git filter-branch -f --env-filter "GIT_AUTHOR_NAME='Newname'; GIT_AUTHOR_EMAIL='newemail'; GIT_COMMITTER_NAME='Newname'; GIT_COMMITTER_EMAIL='newemail';" HEAD
+{% endhighlight %}
