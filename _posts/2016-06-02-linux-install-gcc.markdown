@@ -32,7 +32,7 @@ cd gcc-5.3.0
 
 make #-j8 8核 可以加-j参数，用来指定cpu核数
 #获取CPU核数：cat /proc/cpuinfo | grep -c processor
-#make需要依赖g++，yum install gcc-c++
+#make需要依赖g++，yum -y install gcc-c++
 #make这个过程要进行很久的，半个小时左右，gcc编译安装之后目录从100多M变成了5G
 
 make install #若为普通用户，这里执行sudo make install
