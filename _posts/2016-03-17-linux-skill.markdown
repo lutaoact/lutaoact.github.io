@@ -189,3 +189,21 @@ getconf LONG_BIT
 arch
 cat /proc/cpuinfo | grep -c 'flags.*lm' #lm指long mode, 支持lm则是64bit
 {% endhighlight %}
+
+* date命令：
+{% highlight sh %}
+date +'%Y-%m-%dT%H:%M:%S%:z' #标准格式'2016-06-05T21:30:35+08:00'
+date +'%F %H:%M:%S' #%F为%Y-%m-%d的简写，格式为'2013-10-16 17:10:20'
+date +'%F' #只获取日期，格式为'2013-10-16'
+date -d '2013-02-22 22:14' +'%s' #获取时间戳，可以指定环境变量时区TZ=Asia/Shanghai
+date -d @1361542440 +"%Y-%m-%d %H:%M:%S" #时间戳转为时间格式
+date +'%Y%m%d%H%M%S' #20131016171020
+date +'%s' #返回时间戳
+
+cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime #修改时区
+tzselect #交互模式修改时区
+
+#查看时区
+cat /etc/sysconfig/clock #centos
+cat /etc/timezone #ubuntu
+{% endhighlight %}
