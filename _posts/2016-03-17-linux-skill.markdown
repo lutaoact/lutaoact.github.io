@@ -4,6 +4,46 @@ title:  "linux笔记整理"
 date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
+
+* 数组使用：
+{% highlight sh %}
+# 定义数组的两种方式：
+# 1. 直接利用括号为数组变量赋值
+array=('1  1' 22 33) #两个1之间有两个空格，这个主要是为了以下讲解方便
+
+# 2. 先定义，然后为数组元素赋值
+declare -a array
+
+array[0]='1  1'
+array[1]=22
+array[2]=33
+
+$array #直接使用数组变量名得出的是第一个元素的值
+${array[n]} #取第n个元素的值
+
+# 取数组所有元素的值，两种方式有细微区别，类似于shell脚本参数的$*和$@的区别
+${array[*]} #会把数组元素拼接成一个字符串，相当于："1  1 22 33 44"
+${array[@]} #数组元素保持独立，相当于：'1  1' '22' '33' '44'
+# 当把这两个字符串传给echo时，其实没区别，相当于：
+echo 1  1 22 33 44 #两个1之间有2个空格，但在shell中，有几个空格，其实没啥差别
+
+# 当需要将数组元素按顺序传给其它程序时，最好使用"${array[@]}"，即用双引号圈引
+# 执行以下程序来查看它们的区别
+for i in "${array[*]}"; do
+  echo "$i"
+done
+
+for i in "${array[@]}"; do
+  echo "$i"
+done
+
+${#array[*]} ${#array[@]} #数组元素个数
+${!array[*]} ${!array[@]} #数组中所有有赋值的索引列表
+
+#定义一个关联数组，其它操作类似于普通数组
+declare -A assoc_arr #GNU bash才有这个参数，BSD bash貌似没有
+{% endhighlight %}
+
 * tar命令：
 {% highlight sh %}
 tar cvf[i] xxxx.tar[.ext] filelist
