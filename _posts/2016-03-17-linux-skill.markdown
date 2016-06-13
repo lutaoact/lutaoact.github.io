@@ -248,3 +248,18 @@ tzselect #交互模式修改时区
 cat /etc/sysconfig/clock #centos
 cat /etc/timezone #ubuntu
 {% endhighlight %}
+
+* 修改文件的字符编码
+{% highlight sh %}
+# iconv -f [fromcode] -t [tocode] [file] > [newfile]
+iconv -f GBK -t UTF-8 file > newfile
+{% endhighlight %}
+
+* dos2unix和unix2dos 文件断行格式互转
+{% highlight sh %}
+-n, --newfile INFILE OUTFILE #new file mode, 将转化后的内容写入新文件
+-o, --oldfile FILE #old file mode, default mode, 将转化后的内容写入原文件
+
+# BOM(Byte Order Mark)是个很烦人的东西，3个字节，\xEF\xBB\xBF
+# dos2unix never writes a BOM in the output file, unless you use option "-m"
+{% endhighlight %}
