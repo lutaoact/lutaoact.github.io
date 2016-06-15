@@ -53,6 +53,7 @@ bash中的变量并不是强类型的，整数比较和字符串比较之间存�
 ## 空值检测
 bash中检查变量是否为空（即字符串长度是否为0），`-n`检查非空为真，`-z`检查空为真
 {% highlight sh %}
+# 总是用字符串圈引变量，否则在某些版本的bash中可能会存在问题
 if [ -n "$VAR" ]; then
   echo "VAR is not empty"
 fi
@@ -61,3 +62,33 @@ if [ -z "$VAR" ]; then
   echo "VAR is empty"
 fi
 {% endhighlight %}
+
+## 复合比较
+* 基本介绍
+{% highlight sh %}
+-a #逻辑与
+-o #逻辑或
+
+# bash中&&和||有类似作用，只是需要双方括号包围[[ ... ]]
+[[ condition1 && condition2 ]]
+# &&和||具有短路功能，而-a和-o则没有
+{% endhighlight %}
+
+* 示例
+{% highlight sh %}
+# 尝试以下示例来理解它们之间的区别
+[ 1 -eq 1 ] && [ -n "`echo true 1>&2`" ]   # true
+[ 1 -eq 2 ] && [ -n "`echo true 1>&2`" ]   # (no output)
+# ^^^^^^^ False condition. So far, everything as expected.
+
+# However ...
+[ 1 -eq 2 -a -n "`echo true 1>&2`" ]       # true
+# ^^^^^^^ False condition. So, why "true" output?
+
+# Is it because both condition clauses within brackets evaluate?
+[[ 1 -eq 2 && -n "`echo true 1>&2`" ]]     # (no output)
+# No, that's not it.
+# Apparently && and || "short-circuit" while -a and -o do not.
+{% endhighlight %}
+
+注意：在某些复合比较中，即使圈引了变量也是不够的，`[ -n "$string" -o "$a" = "$b" ]`，如果`$string`为空，则可能在某些版本的bash中导致错误发生。安全的方式应该是给可能为空的变量附加一个额外的字符`[ "x$string" != x -o "x$a" = "x$b" ]`。
