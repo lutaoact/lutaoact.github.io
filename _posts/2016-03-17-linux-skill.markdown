@@ -162,17 +162,6 @@ lsb_release -a #sudo yum install redhat-lsb-core
 # Codename:       Core
 {% endhighlight %}
 
-* bash中检查变量是否为空，`-n`检查非空为真，`-z`检查空为真
-{% highlight sh %}
-if [ -n "$VAR" ]; then
-  echo "VAR is not empty"
-fi
-
-if [ -z "$VAR" ]; then
-  echo "VAR is empty"
-fi
-{% endhighlight %}
-
 * openssl生成文件或字符串的校验和
 {% highlight sh %}
 openssl sha1/md5 filename #生成指定文件的校验和
