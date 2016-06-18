@@ -5,6 +5,16 @@ date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
 
+* 比较两个文件是否相同
+{% highlight sh %}
+diff <file1> <file2> #使用最广泛，用于文本文件比较，是基于“行”的比较
+cmp  <file1> <file2> #基于“字节”的比较，可用于二进制文件比较，亲测比较速度还是挺快的
+
+# 其它尝试
+# 计算两个文件的sha1值，然后比较是否相同，利用进程代换作为diff命令的输入
+diff <(sha1sum <file1> | cut -d" " -f1) <(sha1sum <file2> | cut -d" " -f1)
+{% endhighlight %}
+
 * 数组使用：
 {% highlight sh %}
 # 定义数组的两种方式：
