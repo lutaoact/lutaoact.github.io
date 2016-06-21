@@ -5,14 +5,37 @@ date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
 
+* df和du出来的文件和磁盘大小不相同
+{% highlight text %}
+$ du -sh /
+6.9G /
+
+$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/xvda1       40G   17G   21G  45% /
+tmpfs            16G     0   16G   0% /dev/shm
+{% endhighlight %}
+
+如上所示，du出来的结果为6.9G，而df出来的结果为17G。
+
+最常见的原因是文件删除造成的。当一个文件被删除后，在文件系统目录中已经不可见了，所以du就不会再统计它了。然而如果此时还有运行的进程持有这个已经被删除了的文件的句柄，那么这个文件就不会真正在磁盘中被删除，分区超级块中的信息也就不会更改，这样df仍旧会统计这个被删除了的文件。
+
+{% highlight sh %}
+# 可以利用lsof查找删除的文件，输出第2列即为pid，找出使用文件的程序，重启
+lsof | grep deleted
+{% endhighlight %}
+
 * 比较两个文件是否相同
 {% highlight sh %}
 diff <file1> <file2> #使用最广泛，用于文本文件比较，是基于“行”的比较
 cmp  <file1> <file2> #基于“字节”的比较，可用于二进制文件比较，亲测比较速度还是挺快的
+# 文件相同时，返回码为0，文件不同时，返回码为1，可用做判断条件
 
 # 其它尝试
 # 计算两个文件的sha1值，然后比较是否相同，利用进程代换作为diff命令的输入
 diff <(sha1sum <file1> | cut -d" " -f1) <(sha1sum <file2> | cut -d" " -f1)
+
+# 计算校验和，一般在对远程的大文件比较中用得比较广泛，可以避免对大文件的传输
 {% endhighlight %}
 
 * 数组使用：
