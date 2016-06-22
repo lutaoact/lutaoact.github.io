@@ -103,6 +103,39 @@ usage: scp [-12346BCEpqrv] [-c cipher] [-F ssh_config] [-i identity_file]
 -i #指定认证文件，和ssh一样
 {% endhighlight %}
 
+* lsof命令(List Open Files)
+
+这条命令主要用于列出各种进程所打开的文件的相关信息。在unix中，一切皆文件。
+{% highlight sh %}
+lsof /var/log/syslog #提供文件名，列出打开指定文件的进程
+lsof +D /var/log/ #列出打开指定目录下的文件的进程
+lsof -c ssh -c init #列出以指定名称开始的进程所打开的文件
+
+lsof -u centos  #被指定用户centos打开的文件
+lsof -u ^centos #不是被指定用户centos打开的文件
+
+lsof -p <pid> #指定进程打开的文件
+{% endhighlight %}
+
+其它的一些参数：
+{% highlight sh %}
+-t #输出列表中只包含pid字段，并且没有头部行，输出可以通过管道直接传给kill命令
+-a #当使用多个参数进行筛选时，默认为OR关系，使用-a可转化为AND关系
+
+# 重复模式，根据指定参数重复执行命令
+-r/+r #-r5 +r5 延时5秒重复执行
+# +r在找不到打开的文件时，自动结束；-r会持续运行，不管是否能找到打开的文件。
+{% endhighlight %}
+
+查找网络连接：（网络连接也是文件）
+{% highlight sh %}
+lsof -i #列出打开的网络连接
+lsof -i -a -p <pid> #列出指定进程使用的网络文件
+lsof -i:<port> #列出指定端口上的连接
+lsof -i tcp; lsof -i udp #列出所有的tcp和udp连接
+# 加上-n参数，可以抑制DNS反向查询，即把ip转化为host的过程，可以使lsof执行更快
+{% endhighlight %}
+
 * uniq的用法：（只能进行相邻行的比较，所以一般用在sort之后）
 {% highlight sh %}
 -c #进行计数
