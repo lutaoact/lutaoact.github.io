@@ -5,6 +5,12 @@ date:   2016-03-17 09:58:27 +0800
 categories: linux bash
 ---
 
+* 修改默认的shell
+{% highlight sh %}
+chpass -s /usr/local/bin/bash
+# 使用自己安装的bash，$BASH展示了执行当前bash实例的程序全路径
+{% endhighlight %}
+
 * df和du出来的文件和磁盘大小不相同
 {% highlight text %}
 $ du -sh /
