@@ -9,6 +9,7 @@ categories: linux bash
 {% highlight sh %}
 chpass -s /usr/local/bin/bash
 # 使用自己安装的bash，$BASH展示了执行当前bash实例的程序全路径
+# 在mac中，应该首先把自己安装的bash路径添加到/etc/shells文件中，否则上述命令会执行失败
 {% endhighlight %}
 
 * df和du出来的文件和磁盘大小不相同
