@@ -6,12 +6,17 @@ categories: linux tmux
 ---
 
 ## 操作指令
+
+默认激活控制台的按键：Ctrl-B（screen软件用的是Ctrl-A）
+
 {% highlight text %}
-Ctrl-B space #均分窗口，其实是变换pane的排布样式
-Ctrl-B c     #新建窗口
-Ctrl-B ,     #修改窗口名称
-Ctrl-B %     #垂直分隔窗口
-Ctrl-B "     #水平分隔窗口
+# 以下指令省略了激活控制台的统一前缀按键Ctrl-B
+space #均分窗口，其实是变换pane的排布样式
+c     #新建窗口
+,     #修改窗口名称
+.     #修改窗口编号
+%     #垂直分隔窗口
+"     #水平分隔窗口
 {% endhighlight %}
 
 ## 小知识
