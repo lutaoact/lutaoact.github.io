@@ -1,0 +1,29 @@
+---
+layout: post
+title:  "lua"
+date:   2016-07-15 10:25:48 +0800
+categories: lua
+---
+
+## 基本使用
+{% highlight sh %}
+* 行注释用--
+* 数组和字典都是table，数组下标不是从0开始的，而是从1开始的
+{% endhighlight %}
+
+## 常用操作
+{% highlight sh %}
+table.concat(array, ',') #连接，相当于join
+table.insert(array, 1, 15) #添加元素，在位置1处添加15。如果不带位置参数，则默认添加到最后
+table.remove(array) #删除最后一个元素
+table.remove(array, 1) #删除指定位置的元素
+type() #返回一个变量的类型，table string number
+tostring(v) #转换成字符串
+tonumber(e[, base]) #转换成数字
+repeat while #相当于do while，while部分可以用until
+{% endhighlight %}
+
+## redis中的使用
+{% highlight text %}
+* KEYS ARGV 两个变量，分别存储需要操作的key和传递给脚本的参数，只能通过这两个变量传入参数
+{% endhighlight %}
