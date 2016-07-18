@@ -9,6 +9,14 @@ categories: lua
 {% highlight sh %}
 * 行注释用--
 * 数组和字典都是table，数组下标不是从0开始的，而是从1开始的
+* 函数调用的参数是字符串字面量或者table构造器时，可以省略括号
+* unpack函数最重要的使用场景就是generic call，即函数的动态参数调用。
+* 函数的多值返回。lua会根据调用场景来调整返回的结果数量。
+  1. 当函数调用作为一个语句时，忽略所有的结果
+  2. 当函数调用作为一个表达式时，只保留第一个返回结果
+  3. 只有当函数调用在一个表达式列表中是最后一个表达式时，我们会得到所有的返回值。这种表达式
+     列表出现在4中结构中：mutiple assignment, arguments to function calls, table
+     constructors, and return statements
 {% endhighlight %}
 
 ## 常用操作
