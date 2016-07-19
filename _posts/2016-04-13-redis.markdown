@@ -84,6 +84,9 @@ appendfsync everysec
 # 慢日志
 slowlog-log-slower-than 100000
 slowlog-max-len 65536
+
+# 其它的一些不太需要修改的选项
+lua-time-limit 5000 #lua脚本的最大执行时间
 {% endhighlight %}
 
 * 零碎知识点收集

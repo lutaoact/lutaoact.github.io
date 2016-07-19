@@ -51,4 +51,13 @@ end -- if empty
   2. redis错误回复转换成lua表，表内的err域包含了错误信息
   3. redis的Nil回复和Nil多条回复转换成lua的布尔值false
   4. redis的单个回复转换为数字或字符串，多条bulk回复转换成lua表
+* 脚本应该写成纯函数：
+     对于同样的数据集输入，给定相同的参数，脚本执行的redis写命令总是相同的。脚本执行的操作
+  不能依赖于任何隐藏（非显式）数据，不能依赖于脚本在执行过程中、或脚本在不同执行时期之间可能
+  变更的状态，并且它也不能依赖于任何来自I/O设备的外部输入
+* 为了防止不必要的数据泄漏进lua环境，脚本不允许创建全局变量，将脚本中用到的所有变量都使用
+  local关键字定义为局部变量
+* 加载了以下lua库：base, table, string, math, struct, cjson, cmsgpack, bitop,
+  redis.sha1hex函数, redis lua debugger上下文中的redis.breakpoint和redis.debug函数
+  其中struct, cjson和cmsgpack是外部库，其它的都是lua的标准库(redis 3.2)
 {% endhighlight %}
