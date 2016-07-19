@@ -31,6 +31,12 @@ info clients #查看当前连接的客户端数量
 
 client list #客户端信息，具体字段内容参考http://redis.io/commands/client-list
 
+# 脚本相关
+script flush #清除所有脚本缓存
+script exists #根据给定的脚本校验和，检查指定的脚本是否存在于脚本缓存
+script load #将一个脚本装入脚本缓存，但并不立即运行它
+script kill #杀死当前正在运行的脚本
+
 # 修改配置
 config set timeout 3600 #设置客户端连接空闲超过3600秒，则自动断开
 

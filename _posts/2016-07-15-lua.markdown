@@ -42,4 +42,13 @@ end -- if empty
 ## redis中的使用
 {% highlight text %}
 * KEYS ARGV 两个变量，分别存储需要操作的key和传递给脚本的参数，只能通过这两个变量传入参数
+* 使用lua 5.1的版本
+* redis.call()和redis.pcall()唯一区别在于它们使用不同的方式处理执行命令所产生的错误
+* 脚本里使用的所有键都应该由KEYS数组来传递，一个特别重要的用途是确保redis集群可以将请求
+  发送到正确的集群节点
+* lua数据类型和redis数据类型之间存在着一一对应的转换关系
+  1. redis状态回复转换成lua表，表内的ok字段包含了状态信息
+  2. redis错误回复转换成lua表，表内的err域包含了错误信息
+  3. redis的Nil回复和Nil多条回复转换成lua的布尔值false
+  4. redis的单个回复转换为数字或字符串，多条bulk回复转换成lua表
 {% endhighlight %}
