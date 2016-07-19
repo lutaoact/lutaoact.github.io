@@ -84,6 +84,7 @@ slowlog-max-len 65536
 {% highlight sh %}
 * 32位的redis最大只能使用4G内存
 * 可以使用LPUSH和LTRIM来维持一个固定长度的列表
+* redis.replicate_commands(), Replicating commands instead of scripts, from v3.2
 {% endhighlight %}
 
 * 实践经验
