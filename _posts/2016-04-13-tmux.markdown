@@ -5,6 +5,13 @@ date:   2016-04-13 11:03:03 +0800
 categories: linux tmux
 ---
 
+## 基本概念
+{% highlight sh %}
+session 会话
+window  窗口
+pane    面板
+{% endhighlight %}
+
 ## 操作指令
 
 默认激活控制台的按键：Ctrl-B（screen软件用的是Ctrl-A）
@@ -13,6 +20,7 @@ categories: linux tmux
 # 以下指令省略了激活控制台的统一前缀按键Ctrl-B
 space #均分窗口，其实是变换pane的排布样式
 c     #新建窗口
+$     #修改会话名称
 ,     #修改窗口名称
 .     #修改窗口编号
 %     #垂直分隔窗口
