@@ -6,10 +6,8 @@ categories: shadowsocks
 ---
 
 ## 下载软件
-* windows
-[下载][download-shadowsocks-windows]
-* mac
-[下载][download-shadowsocks-mac]
+* windows [最新版下载][download-shadowsocks-windows-2-5-2] [历史版本][download-shadowsocks-windows]
+* mac [下载][download-shadowsocks-mac]
 
 1. 下载之后安装，然后进行服务器信息设置，可以通过shadowsocks软件自带的扫描二维码功能直接录入服务器信息：（以mac版为例，windows版基本操作也差不多）
 
@@ -59,6 +57,7 @@ categories: shadowsocks
 * 张翼翀: 10
 
 [download-shadowsocks-windows]: http://7xsgzh.com1.z0.glb.clouddn.com/Shadowsocks.exe
+[download-shadowsocks-windows-2-5-2]: http://7xsgzh.com1.z0.glb.clouddn.com/Shadowsocks-2.5.2.exe
 [download-shadowsocks-mac]: http://7xsgzh.com1.z0.glb.clouddn.com/ShadowsocksX-2.6.3.dmg
 [scan-qrcode-qn]: http://7xsgzh.com1.z0.glb.clouddn.com/img%2Fscan-qrcode.png
 [update-pac-qn]: http://7xsgzh.com1.z0.glb.clouddn.com/img%2Fupdate-pac.jpg
