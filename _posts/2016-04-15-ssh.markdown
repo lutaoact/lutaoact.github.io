@@ -47,6 +47,15 @@ ssh -R 2222:127.0.0.1:22 user@host
 # 这会在服务器上启动一个监听在2222端口上的sshd进程，当我们连接服务器的2222端口时，
 # 自动连接到公司电脑的22端口上，也就是ssh登录的默认端口，就可以实现连接了
 ssh -p 2222 user@127.0.0.1
+
+# 在本机~/.ssh/config中增加配置
+Host remotenode
+  Hostname xxx.xxx.xxx.xxx
+  User centos
+  IdentityFile ~/.ssh/TT_DDX_MacMini
+  RemoteForward 2222 127.0.0.1:22
+  ExitOnForwardFailure yes
+# 可以将命令简化为：ssh remotenode
 {% endhighlight %}
 
 * 通过LocalForward访问不对外开放的端口
@@ -55,4 +64,28 @@ ssh -L 54320:127.0.0.1:5432 user@host
 # 映射本机的54320端口到服务器的5432端口
 # 当我们连接本机的54320端口时，也就是连接到了服务器的5432端口
 # 当5432端口不对外开放时，可以通过此方法实现访问
+
+# 在本机~/.ssh/config中增加配置
+Host localnode
+  Hostname xxx.xxx.xxx.xxx
+  User centos
+  IdentityFile ~/.ssh/TT_DDX_MacMini
+  LocalForward 54320 127.0.0.1:5432
+  ExitOnForwardFailure yes
+# 可以将命令简化为：ssh localnode
+{% endhighlight %}
+
+* 利用while实现自动连接
+{% highlight sh %}
+# 可以在~/.bashrc中添加
+function autoconnect() {
+  while true
+  do
+    ssh -v -N "$1" #-N参数表示只打开隧道，并不实际登录
+    sleep 10
+  done
+}
+alias connectlocal='autoconnect localnode'
+alias connectremote='autoconnect remotenode'
+# 执行gotunnel实现自动连接
 {% endhighlight %}
