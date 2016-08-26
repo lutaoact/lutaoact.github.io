@@ -5,6 +5,15 @@ date:   2016-04-15 15:21:45 +0800
 categories: linux ssh
 ---
 
+* 常用选项
+{% highlight sh %}
+-i #认证文件
+-f #在命令执行之前送入后台
+-N #不要执行remote command，在只需做端口转发的时候非常有用
+-L #LocalForward
+-R #RemoteForward
+{% endhighlight %}
+
 * root用户登录选项，主要是关于PermitRootLogin选项的配置
 
 以下内容来自man sshd_config
@@ -26,6 +35,24 @@ PermitRootLogin
 {% endhighlight %}
 如果希望root用户只能通过pubkey验证方式登录，可用如下设置：
 {% highlight text %}
-PasswordAuthentication yes
+PasswordAuthentication no
 PermitRootLogin without-password
+{% endhighlight %}
+
+* 通过RemoteForward在家里访问自己在公司的电脑
+{% highlight sh %}
+# 需要一台服务器，在家里和在公司都能访问到，这里假设就是host服务器
+ssh -R 2222:127.0.0.1:22 user@host
+# 映射host服务器上的2222端口到本地的22端口
+# 这会在服务器上启动一个监听在2222端口上的sshd进程，当我们连接服务器的2222端口时，
+# 自动连接到公司电脑的22端口上，也就是ssh登录的默认端口，就可以实现连接了
+ssh -p 2222 user@127.0.0.1
+{% endhighlight %}
+
+* 通过LocalForward访问不对外开放的端口
+{% highlight sh %}
+ssh -L 54320:127.0.0.1:5432 user@host
+# 映射本机的54320端口到服务器的5432端口
+# 当我们连接本机的54320端口时，也就是连接到了服务器的5432端口
+# 当5432端口不对外开放时，可以通过此方法实现访问
 {% endhighlight %}
