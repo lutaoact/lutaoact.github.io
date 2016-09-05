@@ -89,3 +89,26 @@ alias connectlocal='autoconnect localnode'
 alias connectremote='autoconnect remotenode'
 # 执行gotunnel实现自动连接
 {% endhighlight %}
+
+## 问题排查
+* `Warning: remote port forwarding failed for listen port 2222`
+
+执行ssh命令的时候增加`-v`参数，可以看到debug信息：
+{% highlight text %}
+debug1: Authentication succeeded (publickey).
+Authenticated to 120.55.92.192 ([120.55.92.192]:22).
+debug1: remote forward failure for: listen 2222, connect 127.0.0.1:22
+{% endhighlight %}
+权限认证没有问题，但是却无法正常打开隧道，我猜是端口方面有问题，所以执行了下面的检查：
+{% highlight text %}
+$ sudo netstat -tlnp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address   Foreign Address  State   PID/Program name
+tcp        0      0 127.0.0.1:2222  0.0.0.0:*        LISTEN  10528/sshd
+tcp        0      0 0.0.0.0:22      0.0.0.0:*        LISTEN  1338/sshd
+{% endhighlight %}
+监听在端口22上的程序是服务器本来的sshd守护进程，而端口2222上的进程，应该是RemoteForward操作异常结束，但并未清理掉的进程，所以导致再次进行端口映射时操作失败。
+
+解决方案：**`清理掉2222端口上的程序，重新执行RemoteForward操作。`**
+
+另外说一句，执行netstat的时候，尽量使用sudo权限，否则无法看到占用该端口的PID和Program name。
