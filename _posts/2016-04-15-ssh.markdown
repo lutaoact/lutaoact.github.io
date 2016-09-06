@@ -14,26 +14,7 @@ categories: linux ssh
 -R #RemoteForward
 {% endhighlight %}
 
-* root用户登录选项，主要是关于PermitRootLogin选项的配置
-
-以下内容来自man sshd_config
-{% highlight text %}
-PermitRootLogin
-  Specifies whether root can log in using ssh(1). The argument must be "yes",
-  "without-password", "forced-commands-only", or "no". The default is "yes".
-
-  If this option is set to "without-password", password authentication is
-  disabled for root.
-
-  If this option is set to "forced-commands-only", root login with public key
-  authentication will be allowed, but only if the command option has been
-  specified (which may be useful for taking remote backups even if root login
-  is normally not allowed). All other authentication methods are disabled for
-  root.
-
-  If this option is set to "no", root is not allowed to log in.
-{% endhighlight %}
-如果希望root用户只能通过pubkey验证方式登录，可用如下设置：
+* 限制root用户只能通过pubkey验证方式登录，用如下设置：
 {% highlight text %}
 PasswordAuthentication no
 PermitRootLogin without-password
@@ -88,6 +69,30 @@ function autoconnect() {
 alias connectlocal='autoconnect localnode'
 alias connectremote='autoconnect remotenode'
 # 执行gotunnel实现自动连接
+{% endhighlight %}
+
+## sshd_config选项
+{% highlight text %}
+AuthorizedKeysFile .ssh/authorized_keys
+    指定包含用于用户认证的公钥的文件，可以是绝对路径，也可以是基于用户home目录的相对路径。
+PasswordAuthentication yes/no
+    设为no，则关闭密码认证，可以通过开启AuthorizedKeysFile来使用密钥认证
+PermitRootLogin yes/without-password/forced-commands-only/no
+    是否允许root用户登录，默认为yes。
+    If this option is set to "without-password", password authentication is
+    disabled for root.
+    If this option is set to "forced-commands-only", root login with public key
+    authentication will be allowed, but only if the command option has been
+    specified (which may be useful for taking remote backups even if root login
+    is normally not allowed). All other authentication methods are disabled for
+    root.
+    If this option is set to "no", root is not allowed to log in.
+{% endhighlight %}
+
+## ssh_config选项
+{% highlight text %}
+BatchMode yes/no
+    设为yes时，不再询问密码。在执行脚本或一些批处理任务时很有用。默认为no
 {% endhighlight %}
 
 ## 问题排查
