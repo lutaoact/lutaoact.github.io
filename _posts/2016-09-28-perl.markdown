@@ -1,0 +1,23 @@
+---
+layout: post
+title:  "perl"
+date:   2016-09-28 17:22:28 +0800
+categories: sed
+---
+
+## 介绍
+perl具有非常优秀的文本处理能力，perl的出现完全取代了sed和awk的功能。作为一个perl高手，是在不应该渐渐地淡忘了这项可贵的技能啊。
+
+### 使用示例
+1 文件转码处理 gbk => utf8
+{% highlight perl %}
+use Encode qw/decode encode/;
+
+open my $fh, '<', 'input.txt' or die $!;
+open my $out, '>', 'output.txt' or die $!;
+while (my $line = <$fh>) {
+  my $in = encode('utf8', decode('gbk', $line));
+  print $out $in;
+}
+# 记于2016-09-28，时隔两年，我以为自己已经不会写perl了，但指尖落在键盘上时，代码便汩汩流淌。
+{% endhighlight %}
