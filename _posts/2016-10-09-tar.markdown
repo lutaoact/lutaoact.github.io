@@ -12,7 +12,7 @@ categories: linux tar
 -f, --file #后接打包文件名
 -x, --extract #解包命令，与-c对应，不能同时出现
 -p #保留备份数据的原本权限和属性
--g #后接增量备份的快照文件
+-g, --listed-incremental #后接增量备份的快照文件
 -C #指定解压缩的目录
 --exclude #排除不打包的目录或文件，支持正则匹配
 -X, --exclude-from #后接一个文件，内容为需要排除的目录或文件，每行一个
@@ -51,5 +51,21 @@ find . -name '*.bson' | xargs tar cvfz /tmp/bak.tar.gz
 {% endhighlight %}
 ### 远程备份
 {% highlight sh %}
-ssh host tar cvfzp - bak_dir | cat > bak.tar.gz
+# 远端文件备份到本地
+ssh server tar cvfz - bak_dir | cat > bak.tar.gz
+
+# 本地文件传输到远程
+tar cvfz - file | ssh server "tar xvfz -"
+
+# 本地文件压缩到远程
+tar cvfz - file| ssh server "cat > file.tar.gz"
+
+# 本地文件解压到远程
+ssh server "tar xvfz -" < file.tar.gz
+
+# 远程文件解压到本地
+ssh server "cat file.tar.gz" | tar xvfz -
 {% endhighlight %}
+## 相关链接
+* [ssh tar 命令把远程文件拉回来或推过去](http://zqscm.qiniucdn.com/data/20101215175709/index.html)
+* [tar命令高级用法——备份数据](http://seanlook.com/2014/12/08/tar_backup_filesystem/)
