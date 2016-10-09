@@ -84,20 +84,6 @@ ${!array[*]} ${!array[@]} #数组中所有有赋值的索引列表
 declare -A assoc_arr #GNU bash才有这个参数，BSD bash貌似没有
 {% endhighlight %}
 
-* tar命令：
-{% highlight sh %}
-tar cvf[i] xxxx.tar[.ext] filelist
-tar xvf[i] xxxx.tar[.ext]
-
-# [i]是处理不同格式文件时的指示符，与[.ext]的对应关系如下
-z => .gz
-j => .bz2
-J => .xz
-
-# .7z格式的文件，需要安装p7zip包，使用7z命令
-7z x xxxx.7z #解压缩
-{% endhighlight %}
-
 * scp命令：
 {% highlight sh %}
 usage: scp [-12346BCEpqrv] [-c cipher] [-F ssh_config] [-i identity_file]

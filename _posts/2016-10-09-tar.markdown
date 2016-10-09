@@ -1,0 +1,55 @@
+---
+layout: post
+title:  "tar命令实现数据备份"
+date:   2016-10-09 15:16:00 +0800
+categories: linux tar
+---
+
+## 常用选项
+{% highlight sh %}
+-z, --gzip #使用gzip（解）压缩，后缀一般为.gz
+-c, --create #创建文件，后缀一般为.tar
+-f, --file #后接打包文件名
+-x, --extract #解包命令，与-c对应，不能同时出现
+-p #保留备份数据的原本权限和属性
+-g #后接增量备份的快照文件
+-C #指定解压缩的目录
+--exclude #排除不打包的目录或文件，支持正则匹配
+-X, --exclude-from #后接一个文件，内容为需要排除的目录或文件，每行一个
+-t, --list #列出备份档案中的文件列表，不与-c、-x同时出现
+-j, --bzip2 #使用bzip2工具（解）压缩，后缀一般为.bz2
+-J, --xz #后缀一般为.xz
+-P #保留绝对路径，解压时同样会自动解压到绝对路径下
+-v #（解）压缩过程显示文件处理过程，常用但不建议对大型文件使用
+{% endhighlight %}
+
+## 常用命令示例
+{% highlight sh %}
+tar cvf[i] xxxx.tar[.ext] filelist
+tar xvf[i] xxxx.tar[.ext]
+
+# [i]是处理不同格式文件时的指示符，与[.ext]的对应关系如下
+z => .gz
+j => .bz2
+J => .xz
+
+# .7z格式的文件，需要安装p7zip包，使用7z命令
+7z x xxxx.7z #解压缩
+{% endhighlight %}
+### 备份大文件
+{% highlight sh %}
+# 备份当前目录，并以每个文件10M的大小分割，split可以自定义分割生成的文件的前缀
+# -g建立快照，实现增量备份，快照不存在时，会全量备份
+tar cpvfz - -g /tmp/snapshot.snap ./ | split -b 10M - /tmp/bak.tar.gz_
+
+# 恢复过程
+cat /tmp/bak.tar.gz_a* | tar xvfzp - -C /tmp/data/
+{% endhighlight %}
+### 结合find进行文件备份
+{% highlight sh %}
+find . -name '*.bson' | xargs tar cvfz /tmp/bak.tar.gz
+{% endhighlight %}
+### 远程备份
+{% highlight sh %}
+ssh host tar cvfzp - bak_dir | cat > bak.tar.gz
+{% endhighlight %}
