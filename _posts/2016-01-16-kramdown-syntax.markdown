@@ -35,8 +35,8 @@ a [blog][lutaoact blog]
 {% highlight html %}
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 {% endhighlight %}
-我在`_layouts/default.html`的body结束标签之前添加
-
+可以在`_layouts/default.html`的body结束标签之前添加，离线安装有点麻烦，具体可参考[链接][mathjax-doc]。
+{% highlight text %}
 $$
 \begin{align*}
   & \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
@@ -53,6 +53,7 @@ $$
     \end{array} \right)
 \end{align*}
 $$
+{% endhighlight %}
 
 
 
@@ -65,3 +66,4 @@ This is inline $$\sum_{i=1}^n x_ie_i$$
     or, naturally, simple paragraphs
 
 [lutaoact blog]: http://blog.lutaoact.com
+[mathjax-doc]: http://docs.mathjax.org/en/latest/installation.html
