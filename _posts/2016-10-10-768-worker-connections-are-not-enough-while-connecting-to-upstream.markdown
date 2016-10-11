@@ -57,4 +57,12 @@ proxy_set_header Host $host;
 {% endhighlight %}
 这条指令会把请求头部的Host修改成xxx.domain.com，因为xxx.domain.com和domain.com都指向同一个服务器，所以代理之后，因为Host仍然是xxx.domain.com，所以又会回到同一条配置，这就造成了死循环，导致连接数迅速耗尽。
 
-以后碰到问题，要多多细致检查，多多学习~
+## 附注
+{% highlight sh %}
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+{% endhighlight %}
+以上三条指令经常是一起出现，因为在用nginx配置反向代理的时候，如果没有相关配置，真实服务器收到的所有请求的ip都是nginx服务器的ip，这样，真实服务器就无法拿到确切的客户端ip，而且还有可能触发同一ip的访问限制，所以要做这样的配置。
+
+即使是平时经常耳熟能详的东西，也不见得任何时候都不会有问题，以后碰到问题，要多多思考，多多学习~
