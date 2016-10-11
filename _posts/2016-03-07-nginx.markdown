@@ -4,11 +4,32 @@ title:  "nginx笔记"
 date:   2016-03-07 14:21:41 +0800
 categories: nginx
 ---
-* `nginx`命令
+## 常用命令
 {% highlight sh %}
 which nginx #查看nginx执行路径，一般位于/usr/sbin/nginx #需要sudo来执行
 sudo nginx -s reload #动态载入配置文件，不需要重启服务器，配置文件一般位于/etc/nginx/
 sudo service nginx restart/stop/start
+{% endhighlight %}
+
+## 常用配置指令
+{% highlight sh %}
+root #可以放在http、server或location上下文内部的任何层级，指定查询文件的根目录
+autoindex on; #自动产生一个目录的文件列表，如果index指定的文件并不存在
+index index.html; #默认索引文件。为了返回该文件，nginx会检查它是否存在并内部跳转到
+                  #原url拼接index文件名所生成的新链接，内部跳转会重新查询location的匹配
+try_files #检查指定文件或目录是否存在并做一个内部跳转，当不存在时，返回指定的状态码
+{% endhighlight %}
+
+* 优化处理静态内容的配置 [参考链接](https://www.nginx.com/resources/admin-guide/serving-static-content/)
+{% highlight sh %}
+sendfile on; #默认情况下，nginx处理文件传输的方式是复制内容到缓冲区，然后再发送。启用
+             #sendfile后，减少了复制进缓冲区的步骤而直接从一个文件描述符复制数据到另一个。
+sendfile_max_chunk 1m; #为了避免一个连接完全占用一个worker进程，可以限制每个单独的
+                       #sendfile()系统调用所传输的数据量
+tcp_nopush on; #和"sendfile on;"配置同时使用，使nginx在取得文件数据之后的同一个packet中
+               #同时发送响应的headers，也就是响应的headers和一个文件的起始部分在同一个
+               #packet中发送
+tcp_nodelay on; #取消Nagle算法200ms的默认等待延时
 {% endhighlight %}
 
 * 配置运行php
