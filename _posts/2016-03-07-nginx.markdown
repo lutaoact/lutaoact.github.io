@@ -11,7 +11,9 @@ sudo nginx -s reload #动态载入配置文件，不需要重启服务器，配�
 sudo service nginx restart/stop/start
 {% endhighlight %}
 
-## 常用配置指令
+## 基本知识储备
+
+### 常用配置指令
 {% highlight sh %}
 root #可以放在http、server或location上下文内部的任何层级，指定查询文件的根目录
 autoindex on; #自动产生一个目录的文件列表，如果index指定的文件并不存在
@@ -20,7 +22,15 @@ index index.html; #默认索引文件。为了返回该文件，nginx会检查�
 try_files #检查指定文件或目录是否存在并做一个内部跳转，当不存在时，返回指定的状态码
 {% endhighlight %}
 
-* 优化处理静态内容的配置 [参考链接](https://www.nginx.com/resources/admin-guide/serving-static-content/)
+### 正则表达式匹配操作符
+{% highlight sh %}
+~  #区分大小写 !~表示不匹配
+~* #不区分大小写 !~*表示不匹配
+{% endhighlight %}
+
+## 一些配置示例
+
+### 优化处理静态内容的配置
 {% highlight sh %}
 sendfile on; #默认情况下，nginx处理文件传输的方式是复制内容到缓冲区，然后再发送。启用
              #sendfile后，减少了复制进缓冲区的步骤而直接从一个文件描述符复制数据到另一个。
@@ -29,10 +39,14 @@ sendfile_max_chunk 1m; #为了避免一个连接完全占用一个worker进程�
 tcp_nopush on; #和"sendfile on;"配置同时使用，使nginx在取得文件数据之后的同一个packet中
                #同时发送响应的headers，也就是响应的headers和一个文件的起始部分在同一个
                #packet中发送
-tcp_nodelay on; #取消Nagle算法200ms的默认等待延时
+tcp_nodelay on; #取消Nagle算法的0.2s默认等待延时，只在连接转变为keep-alive状态时启用
 {% endhighlight %}
+相关链接：
 
-* 配置运行php
+* [SERVING STATIC CONTENT](https://www.nginx.com/resources/admin-guide/serving-static-content/)
+* [Nginx 优化:sendfile-tcp_nodelay-tcp_nopush](http://blog.sina.com.cn/s/blog_5f54f0be0102vtlb.html)
+
+### 配置运行php
 {% highlight sh %}
 server {
   listen 80;
@@ -64,14 +78,11 @@ server {
 # php-fpm默认以www-data用户运行，需要修改nginx.conf使worker进程运行在www-data用户下
 # user www-data
 {% endhighlight %}
+相关链接：
 
-* 正则表达式匹配操作符
-{% highlight sh %}
-~  #区分大小写 !~表示不匹配
-~* #不区分大小写 !~*表示不匹配
-{% endhighlight %}
+* [How To Install Linux, nginx, MySQL, PHP (LEMP) stack on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04?utm_source=legacy_reroute)
 
-* 端口转发的配置
+### 端口转发的配置
 {% highlight sh %}
 server
 {
@@ -88,7 +99,7 @@ server
 }
 {% endhighlight %}
 
-* 处理CORS的配置
+### 处理CORS的配置
 {% highlight sh %}
 server
 {
@@ -122,15 +133,19 @@ server
 {% endhighlight %}
 
 
-* 注意事项
-  * 启动`nginx`时，若默认绑定到`80`端口，则需要`sudo`权限
+## 注意事项
+* 启动`nginx`时，若默认绑定到`80`端口，则需要`sudo`权限
 
-* 安装
-  * `centos`:
-    *  建立`/etc/yum.repos.d/nginx.repo`文件，内容参考[yum repo][nginx-linux-packages]
-    *  签名下载地址：[nginx_signing.key][nginx_signing.key]，可使用`wget`或`curl`下载
-    *  导入数字签名：`sudo rpm --import nginx_signing.key`
-    *  `sudo yum update && sudo yum install -y nginx`
+## 安装
+
+### centos
+*  建立`/etc/yum.repos.d/nginx.repo`文件，内容参考[yum repo][nginx-linux-packages]
+*  签名下载地址：[nginx_signing.key][nginx_signing.key]，可使用`wget`或`curl`下载
+*  导入数字签名：`sudo rpm --import nginx_signing.key`
+*  `sudo yum update && sudo yum install -y nginx`
+
+### ubuntu
+* 未完待续
 
 [nginx_signing.key]: http://nginx.org/keys/nginx_signing.key
 [nginx-linux-packages]: http://nginx.org/en/linux_packages.html#mainline
