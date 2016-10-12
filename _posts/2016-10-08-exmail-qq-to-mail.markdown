@@ -43,6 +43,7 @@ https://exmail.qq.com/cgi-bin/loginpage?t=logindomain&s=logout&f=biz&param=@luta
 ## 附注
 * 西部数码的URL转发有免费版和付费版，付费版每年28，挺便宜的，暂时感觉下来，似乎挺稳定的，暂时就这么用吧。
 * 我的域名都是在西部数码注册的，我注册lutaoact.com的时候，腾讯还是支持免费CNAME的，后来给我媳妇注册域名的时候就不能用了，所以以上的配置过程，其实是给我媳妇弄的。毕竟，我家媳妇是记不住exmail这种东西的，能让她少记点东西还是不错的。
+* 西部数码的隐性URL转发是通过html的frame标签实现的，当然我们也可以自己实现一个，然后利用服务器serve这个html文件即可。文件在此[下载](/assets/mail_frame.html)
 
 [origin-way]: http://7xsgzh.com1.z0.glb.clouddn.com/domain-email-origin-way.jpg
 [middle-way]: http://7xsgzh.com1.z0.glb.clouddn.com/domain-email-middle-way.jpg
