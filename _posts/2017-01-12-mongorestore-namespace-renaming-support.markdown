@@ -59,4 +59,4 @@ mongodump --db app --archive | mongorestore --nsInclude='*.user*' \
 {% endhighlight %}
 
 ## 参考链接
-* [mongorestore namespace renaming support](https://jira.mongodb.org/browse/TOOLS-1234)
+* [mongorestore namespace renaming support](https://jira.mongodb.org/browse/TOOLS-1234){:target="_blank"}
