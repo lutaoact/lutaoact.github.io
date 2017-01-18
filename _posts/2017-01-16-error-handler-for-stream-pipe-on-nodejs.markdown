@@ -27,3 +27,4 @@ a.on('error', function(e){handleError(e)})
 ## 参考链接
 * [Error handling with node.js streams](http://stackoverflow.com/questions/21771220/error-handling-with-node-js-streams){:target="_blank"}
 * [Should stream.pipe forward errors?](http://grokbase.com/t/gg/nodejs/12bwd4zm4x/should-stream-pipe-forward-errors){:target="_blank"}
+* [stream-handbook](https://github.com/substack/stream-handbook){:target="_blank"}
