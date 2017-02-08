@@ -2,7 +2,7 @@
 layout: post
 title:  "mac中利用brew安装php"
 date:   2017-02-08 11:38:53 +0800
-categories: mysql character server utf8
+categories: homebrew php
 ---
 
 假设你已经安装好brew了。
@@ -19,7 +19,7 @@ brew tap homebrew/homebrew-php
 
 brew install php71
 # Once the tap is installed, you can install php53, php54, php55, php56,
-# php70, php71, or any formulae you might need 
+# php70, php71, or any formulae you might need
 {% endhighlight %}
 
 ## 参考链接
