@@ -16,7 +16,7 @@ categories: ssh tunnel permitopen
 最后我新建了一个用户forward，并重新生成了一个新的密钥对。我禁用了密码登录，所以需要配置ssh的免密登录。
 
 * 将forward.pem.pub，也就是公钥的内容，放到~/.ssh/authorized_keys里面，配置过ssh免密登录的朋友应该都知道是啥意思。相关内容参考[ssh基础知识][ssh-url]
-* 在密钥开始的ssh-rsa前面，添加如下内容，记得在`ssh-rsa`之前用空行隔开
+* 在密钥开始的ssh-rsa前面，添加如下内容，记得在`ssh-rsa`之前用空格隔开
 {% highlight sh %}
 no-pty,no-X11-forwarding,permitopen="host:port",command="/bin/echo do-not-send-commands"
 
