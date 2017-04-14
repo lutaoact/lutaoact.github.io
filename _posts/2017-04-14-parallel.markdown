@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "nethogs: 按进程实时统计网络流量"
-date:   2017-04-14 18:04:26 +0800
-categories: nethogs
+title:  "paralle利用多核CPU来加速命令"
+date:   2017-04-14 18:04:35 +0800
+categories: parallel
 ---
 
 当服务器流量突然飙升时，往往需要查看系统实时流量来定位原因。nethogs可以根据进程来查看实时流量。
@@ -27,3 +27,4 @@ q  #退出命令提示符
 
 ## 参考链接
 * [nethogs github page](https://github.com/raboof/nethogs){:target="_blank"}
+
