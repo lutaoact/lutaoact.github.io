@@ -24,3 +24,17 @@ cat bigfile.bin | parallel --pipe --recend '' -k bzip2 --best > compressed.bz2
 {% endhighlight %}
 
 非常有必要通读一遍`man parallel_tutorial`的内容，而我确实也已经这么做了，耗时2个小时左右，很有价值。
+
+## 源码安装
+{% highlight sh %}
+# 通过源代码安装 http://git.savannah.gnu.org/cgit/parallel.git/tree/README
+wget http://ftpmirror.gnu.org/parallel/parallel-20170322.tar.bz2
+bzip2 -dc parallel-20170322.tar.bz2 | tar xvf -
+cd parallel-20170322
+./configure && make && sudo make install
+
+# 安装完成之后，如果使用报错
+parallel: Error: --tollef has been retired.
+parallel: Error: Remove --tollef or use --gnu to override --tollef.
+# 检查/etc/parallel/config文件，是不是有个--tollef选项，删掉即可。
+{% endhighlight %}
