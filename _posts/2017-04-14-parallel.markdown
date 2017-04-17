@@ -38,3 +38,6 @@ parallel: Error: --tollef has been retired.
 parallel: Error: Remove --tollef or use --gnu to override --tollef.
 # 检查/etc/parallel/config文件，是不是有个--tollef选项，删掉即可。
 {% endhighlight %}
+
+## 参考链接
+* [GNU Parallel Tutorial](https://www.gnu.org/software/parallel/parallel_tutorial.html){:target="_blank"}
