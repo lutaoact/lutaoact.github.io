@@ -5,26 +5,22 @@ date:   2017-04-14 18:04:35 +0800
 categories: parallel
 ---
 
-当服务器流量突然飙升时，往往需要查看系统实时流量来定位原因。nethogs可以根据进程来查看实时流量。
-
-centos中安装：
 {% highlight sh %}
-sudo yum -y install nethogs
+# 对一个大文件中的列进行求和
+cat rands20M.txt | parallel --pipe -q awk '{s+=$1} END {print s}' | awk '{s+=$1} END {print s}'
+# block默认1M，可以指定
+cat rands20M.txt | parallel --block 2M --pipe -q awk '{s+=$1} END {print s}'
+
+# bzip2不指定文件时，压缩或者解压都是从标准输入到标准输出
+cat bigfile.bin | parallel --pipe --recend '' -k bzip2 --best > compressed.bz2
 {% endhighlight %}
 
-监控流量，执行nethogs命令需要sudo权限
+## 相关参数
 {% highlight sh %}
-nethogs eth1
+-k            #保持顺序
+-q            #quote后续命令，省略掉很多需要用反斜杠转义的地方
+--pipe        #将来自管道的输入传递给命令
+--recend      #技术结束标记
 {% endhighlight %}
 
-监控展示页面的一些快捷键：
-{% highlight sh %}
-m  #修改显示单位
-r  #按接收流量排序 RECEIVED
-s  #按发送流量排序 SENT
-q  #退出命令提示符
-{% endhighlight %}
-
-## 参考链接
-* [nethogs github page](https://github.com/raboof/nethogs){:target="_blank"}
-
+非常有必要通读一遍`man parallel_tutorial`的内容，而我确实也已经这么做了，耗时2个小时左右，很有价值。
