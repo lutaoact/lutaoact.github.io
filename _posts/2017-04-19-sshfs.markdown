@@ -1,0 +1,53 @@
+---
+layout: post
+title:  "sshfs神器：将远程文件系统挂载到本地"
+date:   2017-04-19 17:36:26 +0800
+categories: ssh sshfs fuse
+---
+
+sshfs，可以把ssh连接到的主机资源，映射到本机的文件系统当中，然后用户可以像操作本地文件一样操作，而实际的文件改动将通过ssh传输到远程主机当中。
+
+## 安装
+
+以下是我在mac系统中利用brew安装sshfs的过程，供大家参考。
+{% highlight sh %}
+brew tap homebrew/fuse #可以使用brew search sshfs查找软件所在的库
+
+# sshfs需要依赖fuse，安装方式如下：
+brew cask install osxfuse
+# 因为某些原因，安装过程非常慢，程序可能会在下载软件的过程中卡死。
+# 我们可以在下载安装过程的输出中获取下载地址：
+# https://github.com/osxfuse/osxfuse/releases/download/osxfuse-3.5.8/osxfuse-3.5.8.dmg
+# 可以在一些外网服务器上下载，然后scp拷回本地，亲测这个过程快很多，非常稳妥。
+# 如果之前的下载过程中途终止，可以查看~/Library/Caches/Homebrew/Cask目录，
+# 会发现里面有一个osxfuse--3.5.8.dmg.incomplete文件，删掉这个文件，
+# 将自行下载的文件名称改为osxfuse--3.5.8.dmg，然后放到这个目录下。
+# 重新执行安装命令，通过输出看到，安装过程检测到文件已经下载，所以就很快了。
+# You must reboot for the installation of osxfuse to take effect.
+# 输出提示要重启，但我没有重启，好像也可以。
+
+# 安装sshfs
+brew install homebrew/fuse/sshfs
+# 如果也遇到下载很慢的过程，同样的方法处理
+# https://github.com/libfuse/sshfs/releases/download/sshfs_2.8/sshfs-2.8.tar.gz
+# 下载sshfs-2.8.tar.gz，放到~/Library/Caches/Homebrew目录下，注意跟上面的目录不同
+{% endhighlight %}
+注：`~/Library/Caches/Homebrew`是brew用来存放安装过程下载的临时文件的地方。
+
+## 使用
+{% highlight sh %}
+# 挂载，:后面的dir是远端目录，可以留空，默认是用户home目录
+sshfs user@hostname:dir mountpoint
+
+# 在本地建立目录server，作为挂载点，dev是可以利用ssh免密登录的服务器
+# 执行以下命令成功挂载，server里面就展示出了远端用户目录下的文件
+sshfs dev: server
+
+# 卸载
+umount server
+{% endhighlight %}
+
+## 参考链接
+* [How do I pass a variable into sftp?](https://unix.stackexchange.com/questions/228859/how-do-i-pass-a-variable-into-sftp){:target="_blank"}
+* [sshfs github page](https://github.com/libfuse/sshfs){:target="_blank"}
+* [How To Use SSHFS to Mount Remote File Systems Over SSH](https://www.digitalocean.com/community/tutorials/how-to-use-sshfs-to-mount-remote-file-systems-over-ssh){:target="_blank"}
