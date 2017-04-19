@@ -48,6 +48,7 @@ umount server
 {% endhighlight %}
 
 ## 参考链接
+* [How to list files and only files via SFTP?](https://unix.stackexchange.com/questions/285472/how-to-list-files-and-only-files-via-sftp){:target="_blank"}
 * [How do I pass a variable into sftp?](https://unix.stackexchange.com/questions/228859/how-do-i-pass-a-variable-into-sftp){:target="_blank"}
 * [sshfs github page](https://github.com/libfuse/sshfs){:target="_blank"}
 * [How To Use SSHFS to Mount Remote File Systems Over SSH](https://www.digitalocean.com/community/tutorials/how-to-use-sshfs-to-mount-remote-file-systems-over-ssh){:target="_blank"}
