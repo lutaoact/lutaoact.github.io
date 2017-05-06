@@ -128,6 +128,11 @@ lsof -i:<port> #列出指定端口上的连接
 lsof -i tcp; lsof -i udp #列出所有的tcp和udp连接
 # 加上-n参数，可以抑制DNS反向查询，即把ip转化为host的过程，可以使lsof执行更快
 {% endhighlight %}
+{% highlight sh %}
+# MAC中利用以下命令来代替netstat -tlnp
+lsof -n -i -P | grep -i listen
+{% endhighlight %}
+参考链接：[15 Linux lsof Command Examples (Identify Open Files)](http://www.thegeekstuff.com/2012/08/lsof-command-examples/)
 
 * uniq的用法：（只能进行相邻行的比较，所以一般用在sort之后）
 {% highlight sh %}
