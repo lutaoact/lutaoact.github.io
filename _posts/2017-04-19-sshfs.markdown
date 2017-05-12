@@ -36,7 +36,7 @@ brew install homebrew/fuse/sshfs
 
 ## 使用
 {% highlight sh %}
-# 挂载，:后面的dir是远端目录，可以留空，默认是用户home目录
+# 挂载，:后面的dir是远端目录，可以留空，默认是用户home目录，mountpoint是本地挂载路径
 sshfs user@hostname:dir mountpoint
 
 # 在本地建立目录server，作为挂载点，dev是可以利用ssh免密登录的服务器
@@ -45,6 +45,13 @@ sshfs dev: server
 
 # 卸载
 umount server
+{% endhighlight %}
+如果ssh连接未正常关闭，则挂载点会进入一种异常状态，在访问的时候会提示`Input/output error`，解决方案如下：
+{% highlight sh %}
+ps aux | grep sshfs #先找到sshfs挂载进程的pid
+kill -9 pid #强制关闭进程
+sudo diskutil umount force mountpoint #强制卸载
+# 输出Unmount successful for mountpoint，表示卸载成功
 {% endhighlight %}
 
 ## 参考链接
