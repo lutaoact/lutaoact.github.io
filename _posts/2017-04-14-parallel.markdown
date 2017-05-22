@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "paralle利用多核CPU来加速命令"
+title:  "parallel利用多核CPU来加速命令"
 date:   2017-04-14 18:04:35 +0800
 categories: parallel
 ---
@@ -13,6 +13,11 @@ cat rands20M.txt | parallel --block 2M --pipe -q awk '{s+=$1} END {print s}'
 
 # bzip2不指定文件时，压缩或者解压都是从标准输入到标准输出
 cat bigfile.bin | parallel --pipe --recend '' -k bzip2 --best > compressed.bz2
+
+# 统计每个ip出现的次数，每行一个
+zcat < file.gz | parallel --pipe -q awk '{ sum[$1] += 1; } END { for (i in sum) { print i, sum[i]; }}' | awk '{ sum[$1] += $2; } END { for (i in sum) { print i, sum[i]; }}' | sort -k1 > stats.txt
+
+zcat < file.gz | awk '{print $1}' | sort -k 1 | uniq -c | awk '{print $2, $1}' > stats.txt
 {% endhighlight %}
 
 ## 相关参数
