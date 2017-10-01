@@ -19,6 +19,7 @@ gem sources --add https://ruby.taobao.org/ --remove https://rubygems.org/ #修�
 sudo gem install bundler
 
 # 编辑好Gemfile后，安装其它依赖，最好修改bundle的源
+# 如果有较好的外网，这步可以跳过
 bundle config mirror.https://rubygems.org https://ruby.taobao.org
 
 bundle install
