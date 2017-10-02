@@ -26,17 +26,23 @@ ps axo 'user,pid,command' | grep 'service' | grep -v 'grep' | awk '{print $2}' |
 ## 第二部分：自动重启服务
 命令如下，将服务放在无限循环中，退出之后自动重启。
 {% highlight sh %}
-while true; do restartServer; done
+while true; do startServer; done
 {% endhighlight %}
 
 ## 总结
-可以写一个函数，把两条命令整在一起，这样使用比较方便
+将以上部分写入两条命令，这个功能就可以使用了。其中一条命令为findServiceThenKill，另一条命令可以叫watchAndRestart，内容如下：
 {% highlight sh %}
-function watchandrestart() {
-  fswatch --exclude 'make' -or . | xargs -n1 ~/bin/findMakeThenKill &
-  while true; do make run_local_hms; done
-}
+# findServiceThenKill的内容
+ps axo 'user,pid,command' | grep 'service' | grep -v 'grep' | awk '{print $2}' | xargs kill
+
+# watchAndRestart的内容
+fswatch --exclude 'excludedir' -or . | xargs -n1 ~/bin/findServiceThenKill &
+while true
+do
+  startServer
+done
 {% endhighlight %}
+注意：xargs使用自定义命令应该用绝对路径，因为xargs并不会加载用户的PATH设置。
 
 ## 参考链接
 * [Is there a command like “watch” or “inotifywait” on the Mac?](https://stackoverflow.com/questions/1515730/is-there-a-command-like-watch-or-inotifywait-on-the-mac){:target="_blank"}
