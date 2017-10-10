@@ -1,0 +1,35 @@
+---
+layout: post
+title:  "expect实现命令行自动交互"
+date:   2017-10-10 18:07:59 +0800
+categories: expect
+---
+
+文件名：`loginServerByExpect.exp`
+{% highlight sh %}
+#!/usr/bin/expect -f
+
+#记录日志
+log_file -noappend "/data/log/expect.log"
+
+set timeout 30
+
+# 密码通过参数传递
+set password [lindex $argv 0]
+
+spawn ssh root@master-evm1
+expect "password:"
+send "$password\r"
+
+#进入交互模式
+interact
+{% endhighlight %}
+
+使用方法：
+{% highlight sh %}
+chmod a+x loginServerByExpect.exp
+./loginServerByExpect.exp thisispassword
+{% endhighlight %}
+
+## 参考链接
+* [expect用法](http://www.cnblogs.com/iloveyoucc/archive/2012/05/11/2496433.html){:target="_blank"}
