@@ -113,3 +113,13 @@ sed "2c \\"$'\n'"my monkey's name is wukong"$'\n' my.txt
 # 将my.txt中，每行的s，从第2个开始，全部替换为xxx
 sed 's/s/\'$'\n''xxx/2;h;s/s/xxx/g;H;g;s/\n.*\n//' my.txt
 {% endhighlight %}
+
+## 单行命令总结
+{% highlight sh %}
+# 匹配行后追加内容
+gsed -i '/matchpattern/a content' tmp.txt
+# 如果content是以空白字符开头，比如tab或者空格，则用一个反斜线标记出来
+gsed -i '/matchpattern/a \ content' tmp.txt
+# 命令行中输入tab键：先按ctrl+v，然后再按tab
+gsed -i '/matchpattern/a \	content' tmp.txt
+{% endhighlight %}
