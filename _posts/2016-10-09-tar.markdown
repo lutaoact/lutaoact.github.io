@@ -2,7 +2,7 @@
 layout: post
 title:  "tar命令实现数据备份"
 date:   2016-10-09 15:16:00 +0800
-categories: linux tar
+categories: linux tar backup
 ---
 
 ## 常用选项
@@ -36,6 +36,19 @@ J => .xz
 # .7z格式的文件，需要安装p7zip包，使用7z命令
 7z x xxxx.7z #解压缩
 {% endhighlight %}
+
+{% highlight sh %}
+# 打包dir目录，排除目录中的exclude_dir目录
+tar cvfz dir.tar.gz --exclude exclude_dir dir
+{% endhighlight %}
+
+{% highlight sh %}
+# @标记符的使用，将newfile和original.tar中包含的文件一起打包进入new.tar.gz，
+tar cvfz new.tar.gz newfile @original.tar
+# 注意对比下面的命令，这个只是把newfile和original.tar这两个文件打包，最后new.tar.gz中只包含这两个文件
+tar cvfz new.tar.gz newfile original.tar
+{% endhighlight %}
+
 ### 备份大文件
 {% highlight sh %}
 # 备份当前目录，并以每个文件10M的大小分割，split可以自定义分割生成的文件的前缀
