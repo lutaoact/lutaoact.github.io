@@ -24,6 +24,9 @@ bundle config mirror.https://rubygems.org https://ruby.taobao.org
 
 bundle install
 bundle exec jekyll serve
+
+# 更新依赖的各种ruby包
+bundle update
 {% endhighlight %}
 
 修改ruby的镜像源，可以参考[链接][ruby-mirror]
