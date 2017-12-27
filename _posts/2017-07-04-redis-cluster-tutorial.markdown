@@ -37,11 +37,11 @@ cluster-migration-barrier <count>
 ## 副本迁移
 
 1. 集群总是会从拥有最多副本的主节点迁移副本
-2. 为何获得自动副本迁移的好处，你需要为某个主节点多添加一些副本，任意选一个主节点就行
+2. 为获得自动副本迁移的好处，你需要为某个主节点多添加一些副本，任意选一个主节点就行
 3. 配置参数cluster-migration-barrier控制副本迁移的特性
 
-## 节点升级
-从节点升级很容易，直接关机然后用新版本重启即可。主节点升级分以下步骤：
+## 节点版本升级
+从节点的升级很容易，直接关机然后用新版本重启即可。主节点的升级分以下步骤：
 
 1. 使用"CLUSTER FAILOVER"命令触发一次手动故障迁移
 2. 等待主节点变为从节点
@@ -81,6 +81,13 @@ done
 {% highlight sh %}
 # redis-trib是一个ruby脚本，可以从redis的github页面获取，在src目录中
 wget https://raw.githubusercontent.com/antirez/redis/unstable/src/redis-trib.rb -O /usr/local/bin/redis-trib
+chmod +x /usr/local/bin/redis-trib
+
+# 查看命令使用帮助
+redis-trib help
+
+# redis-trib需要依赖redis gem
+sudo gem install redis
 {% endhighlight %}
 
 {% highlight sh %}
