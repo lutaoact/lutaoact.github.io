@@ -295,8 +295,14 @@ date +'%Y%m%d%H%M%S' #20131016171020
 date +'%s' #返回时间戳
 date +'%N' #返回纳秒值 000000000-999999999
 
-cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime #修改时区
+date -R #显示时区
+
 tzselect #交互模式修改时区
+# 修改完成之后，如果希望永久生效，可以在 ~/.profile 中加入以下语句
+export TZ='Asia/Shanghai';
+
+# 也可以直接指定时区文件
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime #修改时区
 
 #查看时区
 cat /etc/sysconfig/clock #centos
