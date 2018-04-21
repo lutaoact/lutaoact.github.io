@@ -300,9 +300,12 @@ date -R #显示时区
 tzselect #交互模式修改时区
 # 修改完成之后，如果希望永久生效，可以在 ~/.profile 中加入以下语句
 export TZ='Asia/Shanghai';
-
 # 也可以直接指定时区文件
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime #修改时区
+echo 'Asia/Shanghai' > /etc/timezone
+
+# 在ubuntu docker容器中，并没有完整的zoneinfo，可以通过以下命令安装
+apt-get install -y tzdata
 
 #查看时区
 cat /etc/sysconfig/clock #centos
