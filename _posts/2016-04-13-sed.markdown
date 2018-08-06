@@ -122,4 +122,7 @@ gsed -i '/matchpattern/a content' tmp.txt
 gsed -i '/matchpattern/a \ content' tmp.txt
 # 命令行中输入tab键：先按ctrl+v，然后再按tab
 gsed -i '/matchpattern/a \	content' tmp.txt
+
+# 删除匹配行之前的内容，也就是保留匹配行之后的所有内容
+sed -i '/^package /,$!d' *.go
 {% endhighlight %}
