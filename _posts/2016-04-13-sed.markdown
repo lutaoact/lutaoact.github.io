@@ -127,4 +127,6 @@ gsed -i '/abcd/r otherfile.txt' tmp.txt
 
 # 删除匹配行之前的内容，也就是保留匹配行之后的所有内容
 sed -i '/^package /,$!d' *.go
+# 显示一定范围内的行
+sed -n '190,200p' tmp.txt
 {% endhighlight %}
