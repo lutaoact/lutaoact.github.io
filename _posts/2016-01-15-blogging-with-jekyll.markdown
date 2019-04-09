@@ -33,7 +33,7 @@ bundle update
 如果MAC开启SIP，则受保护目录/usr/bin无法写入，所以对命令做一些调整
 {% highlight sh %}
 # 安装到指定目录/usr/local/bin/
-sudo gem install -n /usr/local/bin/ bundler
+gem install -n /usr/local/bin/ bundler
 # 调整可执行文件的写入路径到~/bin
 bundle install --binstubs=~/bin
 

@@ -1,13 +1,16 @@
 ---
 layout: post
-title:  "shadowsocks代理服务器打赏"
+title:  "shadowsocks服务器支持计划"
 date:   2016-03-31 11:23:40 +0800
 categories: shadowsocks
 ---
 
 ## 下载软件
-* windows [最新版下载][download-shadowsocks-windows-2-5-2] [历史版本][download-shadowsocks-windows]
-* mac [下载][download-shadowsocks-mac]
+
+* windows [下载](/assets/)
+* mac [下载](/assets/ShadowsocksX-2.6.3.dmg)
+
+之前放在七牛云上供下载，现在因为七牛云的测试域名都实效了，所以没法用了，大家需要的时候直接联系我吧。
 
 1. 下载之后安装，然后进行服务器信息设置，可以通过shadowsocks软件自带的扫描二维码功能直接录入服务器信息：（以mac版为例，windows版基本操作也差不多）
 
@@ -15,7 +18,7 @@ categories: shadowsocks
 
     二维码可以联系我来索取，因为服务器是个人花钱部署的，所以不方便完全公开，请大家谅解。
 
-2. 理论上，录入服务器信息，然后浏览器就可以打开google.com了，如果不能，关闭shadowsocks，然后重新打开，如果还有问题，请单独联系我([i@lutaoact.com](mailto:i@lutaoact.com))
+2. 理论上，录入服务器信息，然后浏览器就可以打开google.com了，如果不能，关闭shadowsocks，然后重新打开，如果还有问题，请单独联系我([i@lutao.me](mailto:i@lutao.me))
 
     ![关闭shadowsocks][close-shadowsocks-qn]
 
@@ -27,36 +30,6 @@ categories: shadowsocks
 如果需要在linux命令行中使用代理，可以通过polipo将socks代理转为http代理，需要的，也私聊吧，我看看有没有必要把这部分也写完。
 
 * `polipo`源码 [下载][download-polipo-linux]
-
-## 捐赠列表
-服务器每个月20多刀的费用（人民币150块左右），很稳定，速度也不慢，虽然有人说貌似也有比较便宜的，但懒得换了，翻墙这事，我还是觉得稳定压倒一切。现在已经须臾离不开google了，国内某搜索真心没法用，啥都找不到，再加上该公司行事道德有差，所以就尽量不用了吧。下面是一些用我提供的代理服务的朋友给的支持，谢谢大家，打赏请扫文后二维码。
-
-* 杨丰有: 112
-* 晓风明月: 99
-* 陈国利: 99
-* 张涛: 99
-* 余乐: 99
-* 释呆: 99
-* tfier: 99
-* 白开水: 99
-* 十二: 70
-* 吴天雄: 69 2016-10-21
-* 童涛: 50
-* 许相贤: 50
-* 志涵: 49
-* 于鹏飞: 49
-* 好好学习: 49
-* 程晓磊: 36
-* 金嘉诚: 30
-* 薛佳: 20 2016-09-09
-* 周晓飞: 20
-* Amy: 20
-* 李金海: 20
-* 凉: 20
-* penny: 20
-* 夏志艳: 10
-* 安安: 10
-* 张翼翀: 10
 
 [download-shadowsocks-windows]: http://7xsgzh.com1.z0.glb.clouddn.com/Shadowsocks.exe
 [download-shadowsocks-windows-2-5-2]: http://7xsgzh.com1.z0.glb.clouddn.com/Shadowsocks-2.5.2.exe
