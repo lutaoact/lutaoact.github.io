@@ -10,6 +10,10 @@ build:
 build_dist:
 	docker build -t blogdist:latest -f dist.dockerfile .
 
+rebuild:
+	docker-compose -f docker-compose.yml      build
+	docker-compose -f docker-compose-dist.yml build
+
 run_dist:
 	docker-compose -f docker-compose-dist.yml up -d
 

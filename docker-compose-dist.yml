@@ -1,7 +1,7 @@
 version: '3.0'
 
 services:
-  blog:
+  blogdist:
     container_name: blogdist
     image: lutaoact/blogdist
     build:
