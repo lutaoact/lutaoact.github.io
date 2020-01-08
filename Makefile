@@ -7,6 +7,12 @@ DOCKER_IMAGE=lutaoact/blog
 build:
 	docker build -t $(DOCKER_IMAGE):latest -f development-environment.dockerfile .
 
+build_dist:
+	docker build -t blogdist:latest -f dist.dockerfile .
+
+run_dist:
+	docker-compose -f docker-compose-dist.yml up -d
+
 exec:
 	docker exec -it blog bash
 

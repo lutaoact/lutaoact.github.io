@@ -1,0 +1,11 @@
+version: '3.0'
+
+services:
+  blog:
+    container_name: blogdist
+    image: lutaoact/blogdist
+    build:
+      context: .
+      dockerfile: dist.dockerfile
+    ports:
+      - "8080:80"
