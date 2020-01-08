@@ -1,0 +1,15 @@
+version: '3.0'
+
+services:
+  blog:
+    container_name: blog
+    image: lutaoact/blog
+    build:
+      context: .
+      dockerfile: development-environment.dockerfile
+    ports:
+      - "4000:4000"
+    command:
+      bash -xv /code/docker-compose.sh
+    volumes:
+      - .:/code
