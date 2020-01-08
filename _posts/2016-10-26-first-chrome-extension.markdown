@@ -15,8 +15,6 @@ categories: chrome extension
 
 最后，自己动手，丰衣足食，经过两天的折腾，居然神奇地搞定了。以下提到的操作都是在mac电脑上完成。
 
-注：我所做到的一切，都是基于我可以访问谷歌，如果你现在还不能访问外网，但是有这方面的需求，可以参考这一篇，并联系我。[shadowsocks打赏计划][shadowsocks-donation]
-
 ## 插件安装路径
 chrome插件安装之后的本地源代码存放路径：
 {% highlight text %}
@@ -69,4 +67,3 @@ https://chrome.google.com/webstore/detail/139%E9%82%AE%E7%AE%B1%E5%8A%A9%E6%89%8
 
 [dl-139mail]: http://7xsgzh.com1.z0.glb.clouddn.com/139mail.crx
 [developer-center]: https://chrome.google.com/webstore/developer/dashboard/
-[shadowsocks-donation]: {% post_url 2016-03-31-shadowsocks-donation %}
