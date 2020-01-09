@@ -25,3 +25,8 @@ RUN apt-get update && apt-get install -y ruby-full build-essential zlib1g-dev &&
 RUN gem install bundler --no-ri --no-rdoc && bundle config mirror.https://rubygems.org https://gems.ruby-china.com
 
 WORKDIR /code
+COPY . /code/
+
+RUN bundle install
+
+CMD bundle exec jekyll serve --host 0.0.0.0 --port 4000

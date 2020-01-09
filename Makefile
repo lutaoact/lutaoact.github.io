@@ -4,26 +4,26 @@ BUILD_DATE=$(shell date +%Y%m%d)
 PWD=$(shell pwd)
 DOCKER_IMAGE=lutaoact/blog
 
-build:
-	docker build -t $(DOCKER_IMAGE):latest -f development-environment.dockerfile .
-
-build_dist:
-	docker build -t blogdist:latest -f dist.dockerfile .
+dev: rebuild
+	docker-compose -f docker-compose.yml up --remove-orphans
 
 rebuild:
-	docker-compose -f docker-compose.yml      build
-	docker-compose -f docker-compose-dist.yml build
+	docker-compose -f docker-compose.yml build
 
-run_dist:
-	docker-compose -f docker-compose-dist.yml up -d
+build_server:
+	docker build -t blogserver:latest -f server.dockerfile .
+
+run_server: stop_server
+	docker run --name blogserver -p 4000:4000 -d blogserver:latest
+
+stop_server:
+	docker stop blogserver; docker rm -f blogserver
 
 exec:
 	docker exec -it blog bash
 
-run:
-	docker-compose -f docker-compose.yml up
+exec_server:
+	docker exec -it blogserver bash
 
-logs:
-	docker logs -f blog
-
-restart: stop start
+serverlog:
+	docker logs -f blogserver
