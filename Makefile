@@ -1,6 +1,6 @@
 .PHONY: build exec start stop restart logs
 
-BUILD_DATE=$(shell date +%Y%m%d)
+BUILD_TIME=$(shell date +%Y%m%d%H%M%S)
 PWD=$(shell pwd)
 DOCKER_IMAGE=blogserver
 
@@ -22,6 +22,8 @@ stop_server:
 push: rebuild
 	docker tag $(DOCKER_IMAGE):latest lutaoact/$(DOCKER_IMAGE):latest
 	docker push lutaoact/$(DOCKER_IMAGE):latest
+	docker tag $(DOCKER_IMAGE):latest lutaoact/$(DOCKER_IMAGE):$(BUILD_TIME)
+	docker push lutaoact/$(DOCKER_IMAGE):$(BUILD_TIME)
 
 exec:
 	docker exec -it blog bash
