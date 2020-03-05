@@ -17,9 +17,9 @@ run_server: stop_server
 	docker run --name blogserver -p 4000:4000 -d $(DOCKER_IMAGE):latest
 
 stop_server:
-	docker stop blogserver; docker rm -f blogserver
+	docker stop blogserver; docker rm -f blogserver; true
 
-push: rebuild
+push: build_server
 	docker tag $(DOCKER_IMAGE):latest lutaoact/$(DOCKER_IMAGE):latest
 	docker push lutaoact/$(DOCKER_IMAGE):latest
 	docker tag $(DOCKER_IMAGE):latest lutaoact/$(DOCKER_IMAGE):$(BUILD_TIME)
@@ -35,4 +35,5 @@ serverlog:
 	docker logs -f blogserver
 
 remote_update:
-	docker save $(DOCKER_IMAGE):latest | ssh s 'docker load'
+	ssh s 'docker rmi -f $(DOCKER_IMAGE)' && docker save $(DOCKER_IMAGE):latest | ssh s 'docker load'
+	echo 'docker run --restart always --name blogserver -p 4000:4000 -d blogserver'
