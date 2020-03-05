@@ -33,3 +33,6 @@ exec_server:
 
 serverlog:
 	docker logs -f blogserver
+
+remote_update:
+	docker save $(DOCKER_IMAGE):latest | ssh s 'docker load'
